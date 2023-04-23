@@ -1,20 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./components/Home";
+import Nav from "./components/Nav/nav";
+import Seoul from "./components/city/Seoul";
 
 function App() {
-  const [hello, setHello] = useState('')
-
-  useEffect(() => {
-    axios.get('/hello')
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
-
-  return (
-      <div>
-        백엔드에서 가져온 데이터입니다 : {hello}
-      </div>
-  );
+    return(
+        <BrowserRouter>
+            <Nav />
+            <Routes>
+                <Route path='/' element = { <Home />}></Route>
+                <Route path='/seoul' element = { <Seoul />}></Route>
+            </Routes>
+        </BrowserRouter>
+    )
 }
 
 export default App;
