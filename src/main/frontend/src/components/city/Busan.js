@@ -1,13 +1,13 @@
 import React from "react";
 import "../Home.css"
 
-const Seoul = () => {
+const Busan = () => {
 
     return(
         <div className="ImageDiv">
-           <img src="/img/city/seoul.png" alt="seoul"/>
+            <img src="/img/city/busan.png" alt="busan"/>
         </div>
     )
 }
 
-export default Seoul;
+export default Busan;
