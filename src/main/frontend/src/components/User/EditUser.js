@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Container, TextField, Box } from '@mui/material';
 import Button from '@mui/material/Button';
-
-import styles from './styles/EditUser.css';
-import Navbar from "../Navbar";
 import {Link} from "react-router-dom";
+
+import './styles/EditUser.css';
 
 export default function EditUser() {
     return (
-        <div>
-            <Navbar />
             <div className="container">
                 <div className="containerWrapper">
                     <Container>
@@ -31,6 +28,5 @@ export default function EditUser() {
                     </Container>
                 </div>
             </div>
-        </div>
     );
 }

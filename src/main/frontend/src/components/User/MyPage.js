@@ -1,14 +1,11 @@
 import * as React from 'react';
 import { Container, Paper, Typography, Box, Button, Grid } from '@mui/material';
+import {Link} from "react-router-dom";
 
 import './styles/MyPage.css';
-import Navbar from "../Navbar";
-import {Link} from "react-router-dom";
 
 export default function MyPage() {
     return (
-        <div>
-            <Navbar />
             <div>
                 <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                     <Paper elevation={3} className="paperStyle">
@@ -42,6 +39,5 @@ export default function MyPage() {
                     </Paper>
                 </Container>
             </div>
-        </div>
     );
 }
