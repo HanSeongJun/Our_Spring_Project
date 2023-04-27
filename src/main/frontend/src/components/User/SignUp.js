@@ -1,15 +1,12 @@
 import * as React from 'react';
 import { Container, TextField, Box } from '@mui/material';
 import Button from '@mui/material/Button';
+import {Link} from "react-router-dom";
 
 import './styles/SignUp.css';
-import Navbar from "../Navbar";
-import {Link} from "react-router-dom";
 
 export default function SignUp() {
     return (
-        <div>
-            <Navbar />
             <div className="container">
                 <div className="container-wrapper">
                     <Container>
@@ -33,6 +30,5 @@ export default function SignUp() {
                     </Container>
                 </div>
             </div>
-        </div>
     );
 }

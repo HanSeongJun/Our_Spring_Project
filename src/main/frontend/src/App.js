@@ -9,11 +9,13 @@ import EditUser from "./components/User/EditUser";
 import MyPage from "./components/User/MyPage";
 import EditUserComplete from "./components/User/EditUserComplete";
 import SignUpComplete from "./components/User/SignUpComplete";
+import Navbar from "./components/Navbar";
 
 function App() {
     return(
         <BrowserRouter>
             <div className="App">
+                <Navbar />
                 <Routes>
 
                     // User

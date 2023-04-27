@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Container, TextField, Box } from '@mui/material';
 import Button from '@mui/material/Button';
-import './styles/Login.css';
-import Navbar from "../Navbar";
 import {Link} from "react-router-dom";
+
+import './styles/Login.css';
 
 export default function LogIn() {
     return (
-        <div>
-            <Navbar />
             <div className="container">
                 <div className="containerWrapper">
                     <Container>
@@ -24,6 +22,5 @@ export default function LogIn() {
                     </Container>
                 </div>
             </div>
-        </div>
     );
 }
