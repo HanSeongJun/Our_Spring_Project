@@ -5,7 +5,7 @@ const Busan = () => {
 
     return(
         <div className="ImageDiv">
-            <img src="/img/city/busan.png" alt="busan"/>
+            부산 광역시 관련 svg 넣기
         </div>
     )
 }
