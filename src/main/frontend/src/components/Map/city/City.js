@@ -5,7 +5,7 @@ import Busan from "./Busan";
 
 const City = () => {
 
-    const { code } = useParams();
+    let { code } = useParams();
 
     //넘어온 코드에 따라서 다른 결과를 보여주는 로직을 작성해야함
     console.log("city.js에 넘어온 city code parameter-------->  ",code);

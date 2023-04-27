@@ -1,6 +1,6 @@
 import React from "react";
-import "../components/Home.css";
-import Map from "./Map/Map";
+import "./styles/Home.css";
+import Map from "./Map";
 
 const Home = () => {
 
