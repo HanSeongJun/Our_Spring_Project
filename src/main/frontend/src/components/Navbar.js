@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import '/Users/zzoonsmac/Desktop/My_Project/Our_Spring_Project/src/main/frontend/src/components/Map/styles/Navbar.css'
+import './Navbar.css'
 
 export default function Navbar() {
     return (
