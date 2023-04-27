@@ -1,14 +1,11 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import Navbar from "../Navbar";
 import {Link} from "react-router-dom";
 
 import './styles/EditUserComplete.css';
 
 export default function EditUserComplete() {
     return (
-        <div>
-            <Navbar />
             <div className="container">
                 <h1 className="title">변경이 완료되었습니다.</h1>
                 <Link to="/home">
@@ -17,6 +14,5 @@ export default function EditUserComplete() {
                     </Button>
                 </Link>
             </div>
-        </div>
     );
 }
