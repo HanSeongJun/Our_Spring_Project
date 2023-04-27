@@ -1,0 +1,13 @@
+.Spot{
+    padding: 10px;
+    flex: 2;
+    margin: auto;
+}
+.City{
+    text-align: center;
+    flex: 1;
+}
+.Gu{
+    text-align: center;
+    display: flex;
+}
