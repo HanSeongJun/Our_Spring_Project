@@ -1,0 +1,15 @@
+.BoardContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.MostLikedPhotos {
+    margin-bottom: 200px;
+}
+
+.RecentPhotos {
+
+    margin-bottom: 200px;
+}
