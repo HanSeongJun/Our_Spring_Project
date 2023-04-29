@@ -3,7 +3,9 @@ import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom"
 
 const BackButton = () => {
+
     const navigate = useNavigate();
+
     const goBack = () => {
         navigate(-1);
     }
@@ -11,7 +13,6 @@ const BackButton = () => {
     return (
         <Button color = "inherit" onClick={goBack}>BACK</Button>
     );
-
 }
 
 export default BackButton;
