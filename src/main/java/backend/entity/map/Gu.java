@@ -29,5 +29,10 @@ public class Gu {
 
     }
 
+    //연관관계 편의매서드
+    public void changeGu(City city){
+        this.city = city;
+        city.getGulist().add(this);
+    }
 
 }
