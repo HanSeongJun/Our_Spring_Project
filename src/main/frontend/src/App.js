@@ -9,6 +9,9 @@ import EditUser from "./components/User/EditUser";
 import MyPage from "./components/User/MyPage";
 import EditUserComplete from "./components/User/EditUserComplete";
 import SignUpComplete from "./components/User/SignUpComplete";
+import ListBoard from "./components/Board/ListBoard";
+import UploadBoard from "./components/Board/UploadBoard";
+import DetailBoard from "./components/Board/DetailBoard";
 import Navbar from "./components/Navbar";
 
 function App() {
@@ -30,6 +33,12 @@ function App() {
                     <Route path='/home' element = { <Home />} />
                     <Route path="/city/:code" element = { <City />} />
                     <Route path="/city/:city_code/:gu_code" element = { <Gu />} />
+
+                    // Board
+                    <Route path = '/city/:city_code/:gu_code/spot' element = {<ListBoard/>}/>
+                    <Route path = '/city/:city_code/:gu_code/spot/:image_id' element = {<DetailBoard/>}/>
+                    <Route path = '/city/:city_code/:gu_code/spot/upload' element = {<UploadBoard/>}/>
+
 
                 </Routes>
             </div>
