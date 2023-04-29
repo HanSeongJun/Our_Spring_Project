@@ -12,7 +12,6 @@ const UploadBoard = () => {
 
     console.log("parameters ", city_code, gu_code)
 
-
     return (
         <div>
             <BoardNav city_code = {city_code} gu_code = {gu_code} />
@@ -26,7 +25,6 @@ const UploadBoard = () => {
             </div>
         </div>
     );
-
 }
 
 export default UploadBoard;
