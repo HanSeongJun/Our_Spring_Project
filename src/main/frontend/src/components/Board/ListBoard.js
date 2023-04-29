@@ -12,7 +12,6 @@ const ListBoard = () => {
 
     console.log("parameters ", city_code, gu_code)
 
-
     return (
         <div>
             {/* 일단 city_code, gu_code를 BoardNav로 전달 -> 추후에 해당 코드에 맞는 이름으로 바꿔줘야 함 */}
@@ -59,7 +58,6 @@ const ListBoard = () => {
             </div>
         </div>
     );
-
 }
 
 export default ListBoard;

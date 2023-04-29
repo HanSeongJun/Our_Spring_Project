@@ -12,7 +12,6 @@ const DetailBoard = () => {
 
     console.log("parameters ", city_code, gu_code, image_id)
 
-
     return (
         <div>
             <BoardNav city_code = {city_code} gu_code = {gu_code} />
@@ -40,7 +39,6 @@ const DetailBoard = () => {
             </div>
         </div>
     );
-
 }
 
 export default DetailBoard;
