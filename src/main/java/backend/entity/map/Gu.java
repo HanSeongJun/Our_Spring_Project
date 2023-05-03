@@ -21,8 +21,8 @@ public class Gu {
     @JoinColumn(name="city_id")
     private City city;
 
-    //spot연관관계 매핑필요
-    @OneToMany(mappedBy = "spot")
+    //spot연관관계 매핑필요 -> gu가 1개일때 spot 여러개
+    @OneToMany(mappedBy = "gu")
     private List<Spot> spotlist = new ArrayList<>();
 
     public Gu(){
