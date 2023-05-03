@@ -1,11 +1,13 @@
 package backend.controller.map;
 
 import backend.entity.dto.map.GuMapInfoDto;
+import backend.entity.dto.map.SpotInfoDto;
 import backend.entity.map.Gu;
 import backend.service.map.GuServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -26,6 +28,16 @@ public class GuController {
 
         return guMapResult;
     }
+
+    @GetMapping("/spotlist")
+    public HashMap<String, List> guSpotList(@RequestParam Long id){
+        List<SpotInfoDto> spotInfoDtoList = guService.getSpotList(id);
+        HashMap<String, List> spotListResult = new HashMap<>();
+        spotListResult.put("data",spotInfoDtoList);
+
+        return spotListResult;
+    }
+
 
 
 }
