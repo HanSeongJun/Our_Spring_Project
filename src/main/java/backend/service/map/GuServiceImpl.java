@@ -28,15 +28,15 @@ public class GuServiceImpl implements GuService{
     public List<GuMapInfoDto> getGuMap() {
 
         List<Gu> guList = guRepository.findAll();
-        List<GuMapInfoDto> GuMapInfoDtoList = new ArrayList<>();
+        List<GuMapInfoDto> guMapInfoDtoList = new ArrayList<>();
         for(int i=0; i<guList.size(); i++){
-            Gu gu = guList.get(0);
+            Gu gu = guList.get(1);
             GuMapInfoDto guMapInfoDto = new GuMapInfoDto(gu.getGuCode(), gu.getGuName());
-            GuMapInfoDtoList.add(guMapInfoDto);
+            guMapInfoDtoList.add(guMapInfoDto);
         }
-        log.info("CityServiceImpl/getCityMap/guMapInfoDtoList = {}", GuMapInfoDtoList);
+        log.info("CityServiceImpl/getCityMap/guMapInfoDtoList = {}", guMapInfoDtoList);
 
-        return GuMapInfoDtoList;
+        return guMapInfoDtoList;
 
     }
 
@@ -48,7 +48,7 @@ public class GuServiceImpl implements GuService{
         log.info("CityServiceImpl/getSpotList/spotlist = {}", spotlist);
         List<SpotInfoDto> spotInfoDtoList = new ArrayList<>();
         for(int i=0; i<spotlist.size(); i++){
-            Spot spot = spotlist.get(i);
+            Spot spot = spotlist.get(0);
             SpotInfoDto spotInfoDto = new SpotInfoDto(spot.getSpotName(), spot.getComment());
             spotInfoDtoList.add(spotInfoDto);
         }
