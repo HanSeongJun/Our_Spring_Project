@@ -48,7 +48,7 @@ public class GuServiceImpl implements GuService{
         log.info("CityServiceImpl/getSpotList/spotlist = {}", spotlist);
         List<SpotInfoDto> spotInfoDtoList = new ArrayList<>();
         for(int i=0; i<spotlist.size(); i++){
-            Spot spot = spotlist.get(0);
+            Spot spot = spotlist.get(i);
             SpotInfoDto spotInfoDto = new SpotInfoDto(spot.getSpotName(), spot.getComment());
             spotInfoDtoList.add(spotInfoDto);
         }
