@@ -22,8 +22,8 @@ public class Spot {
     private Gu gu;
 
     //spot:board -> 1:다
-    @OneToMany(mappedBy = "board")
-    private List<Board> baordList = new ArrayList<>();
+//    @OneToMany(mappedBy = "board")
+//    private List<Board> baordList = new ArrayList<>();
 
     public Spot(){
 
