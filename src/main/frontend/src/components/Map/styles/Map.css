@@ -7,64 +7,65 @@
 }
 .OUTLINE {
     stroke-linejoin:round;
-    stroke: #ffffff;
+    stroke: black;
     stroke-width: 2;
 }
-#CD11 {
-    fill: #f1c40f;
-}
-#CD26 {
-    fill: #16a085;
-}
-#CD27 {
-    fill: #f39c12;
-}
-#CD28 {
-    fill: #2ecc71;
-}
-#CD29 {
-    fill: #e67e22;
-}
-#CD30 {
-    fill: #27ae60;
-}
-#CD31 {
-    fill: #d35400;
-}
-#CD36 {
-    fill: #3498db;
-}
-#CD41 {
-    fill: #e74c3c;
-}
-#CD42 {
-    fill: #2980b9;
-}
-#CD43 {
-    fill: #c0392b;
-}
-#CD44 {
-    fill: #9b59b6;
-}
-#CD45 {
-    fill: #8e44ad;
-}
-#CD46 {
-    fill: #34495e;
-}
-#CD47 {
-    fill: #2c3e50;
-}
-#CD48 {
-    fill: #1abc9c;
-}
-#CD50 {
-    fill: #f1c40f;
-}
 .TEXT {
-    fill: #ffffff;
-    font-size: 16;
+    fill: #1abc9c;
+    font-size: 16px;
     font-weight: bold;
     text-anchor: middle;
     alignment-baseline: middle;
 }
+#CD11 {
+    fill: white;
+}
+#CD26 {
+    fill: white;
+}
+#CD27 {
+    fill: white;
+}
+#CD28 {
+    fill: white;
+}
+#CD29 {
+    fill: white;
+}
+#CD30 {
+    fill: white;
+}
+#CD31 {
+    fill: white;
+}
+#CD36 {
+    fill: white;
+}
+#CD41 {
+    fill: white;
+}
+#CD42 {
+    fill: white;
+}
+#CD43 {
+    fill: white;
+}
+#CD44 {
+    fill: white;
+}
+#CD45 {
+    fill: white;
+}
+#CD46 {
+    fill: white;
+}
+#CD47 {
+    fill: white;
+}
+#CD48 {
+    fill: white;
+}
+#CD50 {
+    fill: white;
+}
+
