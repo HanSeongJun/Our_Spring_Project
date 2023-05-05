@@ -17,7 +17,7 @@ import java.io.IOException;
         "classpath:/application.yaml" +
         ",classpath:/api.yml"
 )
-public class Weather {
+public class Weather extends ApiCall{
 
     private final String serviceKey;
     private final String endPoint;
@@ -33,28 +33,7 @@ public class Weather {
 
         String buildUrl = buildUrl();
 
-        URL url = new URL(buildUrl);
-
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        conn.setRequestProperty("Content-type", "application/json");
-
-        System.out.println("Response code: " + conn.getResponseCode());
-        System.out.println("Response message: " + conn.getResponseMessage());
-
-        BufferedReader rd;
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
-            rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        } else {
-            rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-        }
-        StringBuilder sb = new StringBuilder();
-        String line;
-        while ((line = rd.readLine()) != null) {
-            sb.append(line);
-        }
-        rd.close();
-        conn.disconnect();
+        StringBuilder sb = getResponse(buildUrl);
 
         System.out.println(sb.toString());
 
