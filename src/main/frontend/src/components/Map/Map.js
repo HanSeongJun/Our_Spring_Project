@@ -21,7 +21,7 @@ const Map = () => {
 
     return(
         <div className="Map">
-            <svg className="Svg" height="1107" width="800" xmlns="http://www.w3.org/2000/svg">
+            <svg className="Svg" height="1200" width="1000" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="dropshadow">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
@@ -68,7 +68,7 @@ const Map = () => {
                     <path id="CD50" className="OUTLINE" onClick={(e) => HandleTagClick(e.target.id)}
                           d=" M 115 1034 l 5 2 3 2 5 3 6 2 3 5 -1 4 0 0 1 0 0 0 1 1 2 1 -2 1 3 0 -1 7 -2 1 -3 7 -4 4 -3 5 -3 5 -5 4 -5 0 -3 1 0 0 0 0 0 0 -1 1 -2 1 0 1 -3 1 -8 2 -4 0 0 0 -2 0 -3 2 -6 3 -7 0 -8 1 -7 1 -7 -1 -8 0 -7 0 -6 1 -3 5 -6 -1 -3 -4 -4 -3 -5 -2 -2 -4 -2 -8 2 -7 3 -4 1 0 1 0 3 -3 4 -3 3 -5 3 -4 4 -2 6 -4 4 -2 5 -1 6 -1 7 -3 4 -2 4 -1 5 -1 -1 1 4 -1 7 -1 6 -2 3 -3 1 1 0 0 1 0 0 1 0 0 1 0 2 -1 2 0 1 0 0 0 1 0 6 -1 z "/>
                 </g>
-                <g filter="url(#dropshadow)">
+                <g>
                     <text id="LCD11" className="TEXT" x="156" y="214">서울특별시</text>
                     <text id="LCD26" className="TEXT" x="503" y="695">부산광역시</text>
                     <text id="LCD27" className="TEXT" x="418" y="567">대구광역시</text>
