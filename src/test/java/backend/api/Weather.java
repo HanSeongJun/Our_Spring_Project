@@ -22,8 +22,8 @@ public class Weather {
     private final String serviceKey;
     private final String endPoint;
 
-    public Weather(@Value("${api.serviceKey}") String serviceKey,
-                   @Value("${api.endPoint}") String endPoint){
+    public Weather(@Value("${api.weather.serviceKey}") String serviceKey,
+                   @Value("${api.weather.endPoint}") String endPoint){
         this.serviceKey = serviceKey;
         this.endPoint = endPoint;
     }
