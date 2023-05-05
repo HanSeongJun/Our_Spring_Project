@@ -41,9 +41,9 @@ public class GuServiceImpl implements GuService{
     }
 
     @Override
-    public List<SpotInfoDto> getSpotList(Long id) {
+    public List<SpotInfoDto> getSpotList(String guCode) {
 
-        Optional<Gu> gu = guRepository.findById(id);
+        Optional<Gu> gu = guRepository.findByGuCode(guCode);
         List<Spot> spotlist = gu.get().getSpotlist();
         log.info("CityServiceImpl/getSpotList/spotlist = {}", spotlist);
         List<SpotInfoDto> spotInfoDtoList = new ArrayList<>();

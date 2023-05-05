@@ -30,8 +30,8 @@ public class GuController {
     }
 
     @GetMapping("/spotlist")
-    public HashMap<String, List> guSpotList(@RequestParam Long id){
-        List<SpotInfoDto> spotInfoDtoList = guService.getSpotList(id);
+    public HashMap<String, List> guSpotList(@RequestParam String guCode){
+        List<SpotInfoDto> spotInfoDtoList = guService.getSpotList(guCode);
         HashMap<String, List> spotListResult = new HashMap<>();
         spotListResult.put("data",spotInfoDtoList);
 

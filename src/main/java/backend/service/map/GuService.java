@@ -11,6 +11,6 @@ public interface GuService {
     List<GuMapInfoDto> getGuMap();
 
     // gu의 spot list를 제공
-    List<SpotInfoDto> getSpotList(Long id);
+    List<SpotInfoDto> getSpotList(String guCode);
 
 }
