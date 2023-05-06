@@ -24,6 +24,10 @@ public class City {
     @Column(length = 5000, unique = true)
     private String vector;
 
+    //api 호출에 필요한 값
+    private String xCode;
+    private String yCode;
+
     @OneToMany(mappedBy = "city")
     private List<Gu> gulist = new ArrayList<>();
 
@@ -31,11 +35,13 @@ public class City {
 
     }
 
-    public City(String cityCode, String cityName, int grade, String vector){
+    public City(String cityCode, String cityName, int grade, String vector, String xCode, String yCode){
         this.cityCode = cityCode;
         this.cityName = cityName;
         this.grade = grade;
         this.vector = vector;
+        this.xCode = xCode;
+        this.yCode = yCode;
     }
 
     public void updateGrade(int grade){

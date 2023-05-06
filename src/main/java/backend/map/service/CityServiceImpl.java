@@ -48,21 +48,30 @@ public class CityServiceImpl implements CityService{
 
     @Transactional
     @Scheduled(cron = "0 0 9-22 * * *" ) //매일 오전 9시부터 오후 10시까지 진행.
-//    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
+//    @Scheduled(cron = "30 * * * * *" ) //30초 반복 -> test용으로 사용한다.
     public void updateMapGrade() throws IOException, ParseException {
 
         log.info("CityServiceImpl/updateMapGrade/start");
 
-        Optional<City> city = cityRepository.findCityByCityName("서울");
+        List<City> cities = cityRepository.findAll();
 
-        // 우선 서울만 적용
-        int pGrade = particulateMatter.extractParticulateCityGrade("서울");
-        int wGrade = weather.extractWeatherCityGrade("60", "120");//서울에 해당하는 코드
+        int updateGrade;
+        int pGrade;
+        int wGrade;
 
-        int updateGrade = (pGrade + wGrade) / 2;
+        for(int i=0; i<cities.size(); i++){
+            City city = cities.get(i);
+            String cityName = city.getCityName();
+            String xCode = city.getXCode();
+            String yCode = city.getYCode();
 
-        //grade 변경
-        city.get().updateGrade(updateGrade);
+            pGrade = particulateMatter.extractParticulateCityGrade(cityName);
+            wGrade = weather.extractWeatherCityGrade(xCode, yCode);//서울에 해당하는 코드
+
+            updateGrade = (pGrade + wGrade) / 2;
+            //grade 변경
+            city.updateGrade(updateGrade);
+        }
 
         log.info("CityServiceImpl/updateMapGrade/done");
 
