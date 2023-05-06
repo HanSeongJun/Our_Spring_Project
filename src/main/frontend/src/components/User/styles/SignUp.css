@@ -34,11 +34,11 @@
 }
 
 .email-input {
-    flex: 1;
+    flex: 7;
 }
 
 .email-verify {
-    flex: none;
+    flex: 3;
     height: 55px;
 }
 
