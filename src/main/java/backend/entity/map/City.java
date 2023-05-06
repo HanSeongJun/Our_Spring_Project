@@ -34,4 +34,8 @@ public class City {
         this.grade = grade;
     }
 
+    public void updateGrade(int grade){
+        this.grade = grade;
+    }
+
 }

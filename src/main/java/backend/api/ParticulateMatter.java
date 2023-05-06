@@ -1,0 +1,75 @@
+package backend.api;
+
+import lombok.extern.slf4j.Slf4j;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import utils.ApiCall;
+
+import java.io.IOException;
+
+import static utils.BuildUrl.buildUrl;
+
+@Slf4j
+@Component
+public class ParticulateMatter extends ApiCall {
+
+    private final String serviceKey;
+    private final String endPoint;
+
+    private int totalGrade;
+    private int totalCount;
+
+    public ParticulateMatter(@Value("${api.particulate-matter.serviceKey}") String serviceKey,
+                             @Value("${api.particulate-matter.endPoint}") String endPoint){
+        this.serviceKey = serviceKey;
+        this.endPoint = endPoint;
+    }
+
+    public int extractParticulateCityGrade(String sidoName) throws IOException, ParseException {
+
+        String buildUrl = buildUrl(serviceKey, endPoint, sidoName);
+        StringBuilder response = getResponse(buildUrl);
+
+        log.info("ParticulateMatter/extractParticulateCityGrade/response = {}" + response.toString());
+
+        System.out.println(response.toString());
+        // JSONParser로 JSONObject로 변환
+        JSONArray items = getJsonArray(response);
+
+        for (Object itemInfo : items) {
+            Object pm10Grade1 = ((JSONObject) itemInfo).get("pm10Grade");
+
+            try{
+                int pm10Grade =  Integer.parseInt((String) pm10Grade1);
+                log.info("ParticulateMatter/extractParticulateCityGrade/stationName = {}", ((JSONObject) itemInfo).get("stationName"));
+                log.info("ParticulateMatter/extractParticulateCityGrade/dataTime = {}",  ((JSONObject) itemInfo).get("dataTime"));
+                log.info("ParticulateMatter/extractParticulateCityGrade/pm10Grade = {}", pm10Grade);
+
+                totalGrade += pm10Grade;
+                totalCount++;
+            }catch ( Exception e){
+                log.error("ParticulateMatter/extractParticulateCityGrade/error = {}",e);
+            }
+
+        }
+
+        log.info("미세먼지 측정 서비스의 grade 최종값 : {}",totalGrade/totalCount);
+
+        return totalGrade/totalCount;
+
+    }
+
+    private static JSONArray getJsonArray(StringBuilder response) throws ParseException {
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(response.toString());
+        JSONObject extraResponse= (JSONObject) jsonObject.get("response");
+        JSONObject extraBody= (JSONObject) extraResponse.get("body");
+        JSONArray items = (JSONArray) extraBody.get("items");
+        return items;
+    }
+
+}
