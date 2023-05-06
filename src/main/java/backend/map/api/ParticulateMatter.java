@@ -36,7 +36,6 @@ public class ParticulateMatter extends ApiCall {
 
         log.info("ParticulateMatter/extractParticulateCityGrade/response = {}" + response.toString());
 
-        System.out.println(response.toString());
         // JSONParser로 JSONObject로 변환
         JSONArray items = getJsonArray(response);
 
