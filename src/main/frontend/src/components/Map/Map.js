@@ -23,10 +23,11 @@ const Map = () => {
                 console.log(response);
                 const json = await response.json();
                 console.log(json);
-
                 setData(json.data);
-                setGrade(json.data[0][grade]);
                 console.log(json.data);
+                console.log(json.data[0]["grade"]);
+                setGrade(json.data[0]["grade"]);
+                console.log("grade ====>" + grade);
 
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -51,13 +52,16 @@ const Map = () => {
 
     const getColorByGrade = (grade)  =>{
 
+        console.log("getColorByGrade/grade =====> ", grade)
+
         if (grade === 1) {
             return '#B3E5FC'; // Change to the desired color for the highest grade
         } else if (grade === 2) {
             return '#81D4FA'; // Change to the desired color for intermediate grades
-        } else {
-            console.log("grade3")
+        } else if (grade === 3) {
             return '#4FC3F7'; // Change to the desired color for the lowest grade
+        }else{
+            return '#FFFFFFFF';
         }
     }
 
