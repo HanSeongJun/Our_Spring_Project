@@ -1,16 +1,41 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./styles/Home.css";
 import { useNavigate } from 'react-router-dom';
 import "./styles/Map.css";
 import {Rating} from "@mui/material";
 
+const API_URL = 'http://localhost:8080/map/citymap';
+
 const Map = () => {
 
     let navigate = useNavigate();
 
-    const [grade, setGrade] = useState(1);
+    const [grade, setGrade] = useState(0);
+    const [data, setData] = useState([]);
 
     //backend grade를 기준으로 3단계로 영역마다 색을 칠해야함. -> 우선 서울만 진행
+
+    useEffect(() => {
+        // Fetch data from the API
+        const fetchData = async () => {
+            try {
+                const response = await fetch(API_URL);
+                console.log(response);
+                const json = await response.json();
+                console.log(json);
+
+                setData(json.data);
+                setGrade(json.data[0][grade]);
+                console.log(json.data);
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
 
     const HandleTagClick = (id) => {
         console.log("전국지도에서 클릭한 city의 id값 -----> ", id);
@@ -25,11 +50,13 @@ const Map = () => {
     }
 
     const getColorByGrade = (grade)  =>{
+
         if (grade === 1) {
             return '#B3E5FC'; // Change to the desired color for the highest grade
         } else if (grade === 2) {
             return '#81D4FA'; // Change to the desired color for intermediate grades
         } else {
+            console.log("grade3")
             return '#4FC3F7'; // Change to the desired color for the lowest grade
         }
     }
@@ -38,7 +65,7 @@ const Map = () => {
         <div className="Map">
             <div className="Grade3_1">
                 <div>
-                    <p>1등급 2등급 3등급</p>
+                    <p>1등급(매우좋음) 2등급(보통) 3등급(나쁨)</p>
                 </div>
             </div>
             <div className="Grade3_2">
