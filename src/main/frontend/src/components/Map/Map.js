@@ -1,11 +1,16 @@
-import React from "react";
+import React, {useState} from "react";
 import "./styles/Home.css";
 import { useNavigate } from 'react-router-dom';
 import "./styles/Map.css";
+import {Rating} from "@mui/material";
 
 const Map = () => {
 
     let navigate = useNavigate();
+
+    const [grade, setGrade] = useState(1);
+
+    //backend grade를 기준으로 3단계로 영역마다 색을 칠해야함. -> 우선 서울만 진행
 
     const HandleTagClick = (id) => {
         console.log("전국지도에서 클릭한 city의 id값 -----> ", id);
@@ -19,9 +24,25 @@ const Map = () => {
 
     }
 
+    const getColorByGrade = (grade)  =>{
+        if (grade === 1) {
+            return '#B3E5FC'; // Change to the desired color for the highest grade
+        } else if (grade === 2) {
+            return '#81D4FA'; // Change to the desired color for intermediate grades
+        } else {
+            return '#4FC3F7'; // Change to the desired color for the lowest grade
+        }
+    }
+
     return(
         <div className="Map">
-            <svg className="Svg" height="1200" width="1000" xmlns="http://www.w3.org/2000/svg">
+            <div className="Grade3_1">
+                <div>
+                    <p>1등급 2등급 3등급</p>
+                </div>
+            </div>
+            <div className="Grade3_2">
+            <svg className="Svg"  xmlns="http://www.w3.org/2000/svg">
                 <defs>
                     <filter id="dropshadow">
                         <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
@@ -33,7 +54,7 @@ const Map = () => {
                     </filter>
                 </defs>
                 <g filter="url(#dropshadow)">
-                    <path id="CD11" className="OUTLINE" onClick={(e) => HandleTagClick(e.target.id)}
+                    <path id="CD11" className="OUTLINE" onClick={(e) => HandleTagClick(e.target.id)} style={{ fill: getColorByGrade(grade) }}
                           d=" M 178 231 l -4 2 -4 3 -1 0 0 1 -3 1 -4 -5 -4 0 -6 1 -4 3 -2 -1 -1 -1 -3 2 -3 -3 -1 -3 -2 -3 0 0 -1 -2 -3 2 -3 1 -2 -4 0 -8 -3 -1 0 0 0 0 0 0 -2 -1 -3 -2 2 -4 3 -3 0 -1 0 0 0 0 0 -1 1 0 4 2 7 1 2 -2 0 1 2 0 1 -4 2 -8 7 -1 4 2 0 -3 1 -1 2 -4 3 -4 2 0 3 2 7 2 2 8 1 4 1 1 0 0 0 2 0 2 0 1 0 0 -1 6 3 0 8 -1 0 5 -4 3 -1 5 z "/>
                     <path id="CD26" className="OUTLINE" onClick={(e) => HandleTagClick(e.target.id)}
                           d=" M 496 722 l 0 4 -1 0 -2 -5 -1 6 -1 -2 0 0 -1 0 -1 1 -1 2 0 1 -1 -1 -1 -6 -1 -6 -2 3 -2 -3 0 2 0 0 0 0 0 0 0 0 -1 0 1 0 -4 1 -2 -5 -1 5 -1 2 0 0 -2 0 -7 -2 0 -2 2 -2 -1 -3 -5 -4 -2 -2 4 -1 9 0 0 -5 1 -6 5 -1 6 -2 7 -1 4 -6 1 -4 2 0 3 1 1 -3 6 -3 4 -1 1 -5 3 -6 7 0 3 -2 0 -3 0 0 2 -3 1 3 0 0 1 0 2 0 4 -1 4 4 1 3 0 1 -1 1 5 1 -7 4 -1 6 -1 4 -1 0 0 0 0 -1 -1 2 -1 1 2 2 -1 4 -2 4 -3 6 -3 4 0 1 0 0 -5 0 -4 0 -2 -1 -1 4 -1 4 1 -1 0 4 -7 0 -2 -4 -1 1 -3 4 z "/>
@@ -88,6 +109,7 @@ const Map = () => {
                     <text id="LCD50" className="TEXT" x="76" y="1070">제주특별자치도</text>
                 </g>
             </svg>
+            </div>
         </div>
     )
 }

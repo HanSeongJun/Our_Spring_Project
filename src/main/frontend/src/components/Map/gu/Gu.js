@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { useParams } from 'react-router-dom';
 import Seoul from "../city/Seoul";
-import "./styles/Gu.css";
+import "../styles/Gu.css";
 
 const API_URL = 'http://localhost:8080/map/spotlist';
 //현재는 서울만 들어있음 -> test용 -> parameter를 city_code,gu_code로 변경예정
