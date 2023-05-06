@@ -3,7 +3,7 @@ package backend.User.controller;
 import backend.User.entity.dto.UserDto;
 import backend.User.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
@@ -19,55 +19,48 @@ public class UserController {
     @PostMapping("/signUp")
     public String signUp(@RequestBody UserDto userDto) {
         userService.save(userDto);
+        System.out.println("UserController.signUp");
         return "SignUp complete";
     }
 
     // == 로그인 ==
     @PostMapping("/logIn")
-    public String logIn(@RequestBody UserDto userDto, HttpSession session) {
+    public ResponseEntity<String> logIn(@RequestBody UserDto userDto, HttpSession session) {
 
         UserDto loginResult = userService.login(userDto);
+        System.out.println("UserController.logIn");
 
         if (loginResult != null) {
             // 로그인 성공
-            session.setAttribute("loginName", loginResult.getUsername());
-            return "login complete";
+            session.setAttribute("loginUser", loginResult);
+            return ResponseEntity.ok("{\"message\": \"login complete\"}");
         } else {
             // 로그인 실패
-            return "login Fail";
+            return ResponseEntity.badRequest().body("{\"message\": \"login fail\"}");
         }
     }
 
     // == 마이페이지(상세 회원정보 조회) ==
-    @GetMapping("/myPage/{id}")
-    public String findById(@PathVariable Long id, Model model) {
+    @GetMapping("/myPage")
+    public UserDto myPage(HttpSession session) {
+        // HttpSession에서 로그인한 유저 정보 읽어오기
+        UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 
-        UserDto myPageUser = userService.findById(id);
-        model.addAttribute("user", myPageUser);
-
-        if (myPageUser == null) {
-            // 회원 정보가 존재하지 않음
-            return "User does not exist";
+        if (loginUser == null) {
+            // 로그인하지 않은 경우
+            return null;
         }
+        System.out.println("loginUser = " + loginUser);
 
-        return "My Data " + myPageUser.toString();
+        // 로그인한 유저 정보 반환
+        return loginUser;
     }
 
-    // == 회원 정보 수정 ==
-    @PutMapping("/update/{id}")
-    public String update(@PathVariable Long id, @RequestBody UserDto userDto, HttpSession session) {
-
-        UserDto updateUserDto = userService.findById(id);
-
-        if (updateUserDto == null) {
-            // 회원 정보가 존재하지 않음
-            return "User does not exist";
-        }
-
-        if (!updateUserDto.getUsername().equals(session.getAttribute("loginName"))) {
-            // 로그인한 사용자와 수정 대상 사용자가 다름
-            return "Unauthorized user";
-        }
+    // == 회원정보 수정 ==
+    @PutMapping("/update")
+    public String update(@RequestBody UserDto userDto, HttpSession session) {
+        // HttpSession에서 로그인한 유저 정보 읽어오기
+        UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 
         // 회원 정보 수정
         UserDto newUserDto = UserDto.builder()
@@ -76,16 +69,28 @@ public class UserController {
                 .nickname(userDto.getNickname())
                 .email(userDto.getEmail())
                 .build();
-        newUserDto.setId(id);
+        newUserDto.setId(loginUser.getId());
         userService.update(newUserDto);
+
+        // 로그인한 사용자의 세션 정보 업데이트
+        session.setAttribute("loginUser", newUserDto);
+
+        System.out.println("UserController.update");
 
         return "Update complete";
     }
 
-    @GetMapping("/logout")
-    public String logout(HttpSession httpSession) {
-        httpSession.invalidate();
+    // == 로그아웃 ==
+    @PostMapping("/logOut")
+    public ResponseEntity<String> logOut(HttpSession session) {
 
-        return "logout";
+        UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+
+        if (loginUser != null) {
+            session.removeAttribute("loginUser");
+            return ResponseEntity.ok("{\"message\": \"logout complete\"}");
+        } else {
+            return ResponseEntity.badRequest().body("{\"message\": \"user not logged in\"}");
+        }
     }
 }
