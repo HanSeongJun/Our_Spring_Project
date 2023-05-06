@@ -30,9 +30,9 @@ function App() {
                     <Route path="/user/signUpComplete" element={<SignUpComplete />} />
 
                     // Map
-                    <Route path='/home' element = { <Home />} />
-                    <Route path="/city/:code" element = { <City />} />
-                    <Route path="/city/:city_code/:gu_code" element = { <Gu />} />
+                    <Route path='/home' element = {<Home />} />
+                    <Route path="/city/:code" element = {<City />} />
+                    <Route path="/city/:city_code/:gu_code" element = {<Gu />} />
 
                     // Board
                     <Route path = '/city/:city_code/:gu_code/spot' element = {<ListBoard/>}/>

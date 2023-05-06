@@ -23,7 +23,7 @@ public class UserDto {
                 .id(user.getId())
                 .username(user.getUsername())
                 .password(user.getPassword())
-                .nickname(user.getPassword())
+                .nickname(user.getNickname())
                 .email(user.getEmail())
                 .build();
     }
