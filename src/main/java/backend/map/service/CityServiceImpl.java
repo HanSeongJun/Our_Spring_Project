@@ -37,7 +37,7 @@ public class CityServiceImpl implements CityService{
         List<City> cityList = cityRepository.findAll();
         List<CityMapInfoDto> cityMapInfoDtoList = new ArrayList<>();
         for(int i=0; i<cityList.size(); i++){
-            City city = cityList.get(0);
+            City city = cityList.get(i);
             CityMapInfoDto cityMapInfoDto = new CityMapInfoDto(city.getCityCode(), city.getCityName(), city.getGrade());
             cityMapInfoDtoList.add(cityMapInfoDto);
         }
