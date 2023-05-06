@@ -4,6 +4,9 @@
 .Svg{
     background-color: white;
     text-align: center;
+    display: inline-grid;
+    height:1000px;
+    width:800px;
 }
 .OUTLINE {
     stroke-linejoin:round;
@@ -11,7 +14,7 @@
     stroke-width: 2;
 }
 .TEXT {
-    fill: #1abc9c;
+    fill: black;
     font-size: 16px;
     font-weight: bold;
     text-anchor: middle;
