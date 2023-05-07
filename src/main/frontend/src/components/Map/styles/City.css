@@ -1,0 +1,25 @@
+.OUTLINE {
+    stroke-linejoin: round;
+    stroke: black;
+    stroke-width: 2;
+}
+.LINE {
+    stroke-linejoin:round;
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: none;
+}
+.POINT {
+    stroke: #ffffff;
+    stroke-width: 1;
+    fill: #ffffff;
+}
+.TEXT {
+    fill: black;
+    font-size: 16px;
+    text-anchor: middle;
+    alignment-baseline: middle;
+}
+.ImageDiv{
+    fill: white;
+}

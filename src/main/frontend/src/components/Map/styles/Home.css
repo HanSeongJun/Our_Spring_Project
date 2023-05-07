@@ -1,3 +1,40 @@
 .ImageDiv{
   text-align: center;
+  display: inline-block;
+}
+.Grade{
+  text-align: center;
+}
+.Grade3_1{
+  text-align: center;
+  display: inline-block;
+  width: 20%;
+  margin-bottom: 3%;
+  border: 3px solid #CDC0C0FF;
+  border-radius: 10px 10px;
+  boxShadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.Weather{
+  margin: 5% 5%;
+  width: 30%;
+  backgroundColor: #ffffff;
+  border: 3px solid #CDC0C0FF;
+  border-radius: 10px 10px;
+  boxShadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.ParticulateMater{
+  margin: 5% 5%;
+  width: 30%;
+  backgroundColor: #ffffff;
+  border: 3px solid #CDC0C0FF;
+  border-radius: 10px 10px;
+  boxShadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+p {
+  font-family: "BM Jua";
+  font-size: 20px;
 }
