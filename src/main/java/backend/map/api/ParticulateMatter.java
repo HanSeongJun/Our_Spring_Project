@@ -7,11 +7,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import utils.ApiCall;
+import backend.utils.ApiCall;
 
 import java.io.IOException;
 
-import static utils.BuildUrl.buildUrl;
+import static backend.utils.BuildUrl.buildUrl;
 
 @Slf4j
 @Component

@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-import static utils.ApiCall.getResponse;
-import static utils.BuildUrl.buildUrl;
+import static backend.utils.ApiCall.getResponse;
+import static backend.utils.BuildUrl.buildUrl;
 
 @Component
 @Slf4j
