@@ -5,10 +5,13 @@ import backend.User.service.UserService;
 import backend.User.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -19,54 +22,39 @@ public class UserController {
     private final UserService userService;
     private final EmailService emailService;
 
-    // == 회원가입 ==
     @PostMapping("/signUp")
-    public String signUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> signUp(@RequestBody UserDto userDto) {
         userService.save(userDto);
         log.info("UserController.signUp()");
-        return "SignUp complete";
+        return ResponseEntity.ok("{\"message\": \"SignUp complete\"}");
     }
 
-    // == 로그인 ==
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody UserDto userDto, HttpSession session) {
-
         UserDto loginResult = userService.login(userDto);
         log.info("UserController.logIn");
         if (loginResult != null) {
-            // 로그인 성공
             session.setAttribute("loginUser", loginResult);
             return ResponseEntity.ok("{\"message\": \"login complete\"}");
         } else {
-            // 로그인 실패
             return ResponseEntity.badRequest().body("{\"message\": \"login fail\"}");
         }
     }
 
-    // == 마이페이지(상세 회원정보 조회) ==
     @GetMapping("/myPage")
-    public UserDto myPage(HttpSession session) {
-
+    public ResponseEntity<UserDto> myPage(HttpSession session) {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         log.info("UserController.myPage()");
         log.info("loginUser = " + loginUser);
-
         if (loginUser == null) {
-            // 로그인하지 않은 경우
-            return null;
+            return ResponseEntity.status(401).build();
         }
-
-        // 로그인한 유저 정보 반환
-        return loginUser;
+        return ResponseEntity.ok(loginUser);
     }
 
-    // == 회원정보 수정 ==
     @PutMapping("/update")
-    public String update(@RequestBody UserDto userDto, HttpSession session) {
-
+    public ResponseEntity<String> update(@RequestBody UserDto userDto, HttpSession session) {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
-
-        // 회원 정보 수정
         UserDto newUserDto = UserDto.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
@@ -75,21 +63,15 @@ public class UserController {
                 .build();
         newUserDto.setId(loginUser.getId());
         userService.update(newUserDto);
-
-        // 로그인한 사용자의 세션 정보 업데이트
         session.setAttribute("loginUser", newUserDto);
         log.info("UserController.update");
-
-        return "Update complete";
+        return ResponseEntity.ok("{\"message\": \"Update complete\"}");
     }
 
-    // == 로그아웃 ==
     @PostMapping("/logOut")
     public ResponseEntity<String> logOut(HttpSession session) {
-
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
         log.info("UserController.logout");
-
         if (loginUser != null) {
             session.removeAttribute("loginUser");
             return ResponseEntity.ok("{\"message\": \"logout complete\"}");
@@ -98,11 +80,23 @@ public class UserController {
         }
     }
 
-    // == 이메일 인증 ==
     @PostMapping("/emailConfirm")
-    public String emailConfirm(@RequestParam String email) throws Exception {
+    public ResponseEntity<String> emailConfirm(@RequestParam String email) throws Exception {
+        if (!EmailValidator.getInstance().isValid(email)) {
+            return ResponseEntity.badRequest().body("{\"message\": \"Invalid email format\"}");
+        }
+        if (emailService.isEmailExists(email)) {
+            return ResponseEntity.badRequest().body("{\"message\": \"Email already exists\"}");
+        }
         String confirm = emailService.sendSimpleMessage(email);
+        return ResponseEntity.ok(confirm);
+    }
 
-        return confirm;
+    @GetMapping("/checkEmail")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
+        boolean exists = emailService.isEmailExists(email);
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("exists", exists);
+        return ResponseEntity.ok(result);
     }
 }
