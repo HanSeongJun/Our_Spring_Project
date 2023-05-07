@@ -2,6 +2,7 @@ package backend.User.controller;
 
 import backend.User.entity.dto.UserDto;
 import backend.User.service.UserService;
+import backend.User.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     // == 회원가입 ==
     @PostMapping("/signUp")
@@ -94,5 +96,13 @@ public class UserController {
         } else {
             return ResponseEntity.badRequest().body("{\"message\": \"user not logged in\"}");
         }
+    }
+
+    // == 이메일 인증 ==
+    @PostMapping("/emailConfirm")
+    public String emailConfirm(@RequestParam String email) throws Exception {
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
     }
 }
