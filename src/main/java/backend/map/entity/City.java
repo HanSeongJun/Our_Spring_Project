@@ -21,7 +21,7 @@ public class City {
     private int grade;
 
     //svg의 vector값을 저장할 변수
-    @Column(length = 5000, unique = true)
+    @Column(columnDefinition = "varchar(5000)")
     private String vector;
 
     //api 호출에 필요한 값
