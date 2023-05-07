@@ -1,12 +1,8 @@
-import * as React from 'react';
-import { useState } from 'react';
-import { Container, TextField, Box } from '@mui/material';
-import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
-
+import React, { useState } from 'react';
+import { Container, TextField, Box, Button } from '@mui/material';
 import './styles/SignUp.css';
 
-export default function SignUp() {
+const SignUp = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -20,32 +16,29 @@ export default function SignUp() {
         setFormData({ ...formData, [name]: value });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            // 비밀번호와 비밀번호 확인이 일치하지 않는 경우
-            alert("비밀번호가 일치하지 않습니다.");
+            alert('비밀번호가 일치하지 않습니다.');
             return;
         }
 
-        // 회원가입 데이터를 백엔드로 전송
-        fetch('/user/signUp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.text())
-            .then((data) => {
-                console.log(data);
-                // 회원가입 완료 폼으로 이동
-                window.location.href = '/user/signUpComplete';
-            })
-            .catch((error) => {
-                console.error(error);
+        try {
+            const response = await fetch('/user/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
+
+            const data = await response.text();
+            console.log(data);
+            window.location.href = '/user/signUpComplete';
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -75,11 +68,11 @@ export default function SignUp() {
                             className="input"
                             value={formData.confirmPassword}
                             onChange={handleInputChange}
-                            error={formData.password !== formData.confirmPassword} // 오류 상태 여부
+                            error={formData.password !== formData.confirmPassword}
                             helperText={
                                 formData.password !== formData.confirmPassword
                                     ? '비밀번호가 일치하지 않습니다.'
-                                    : '' // 오류 메시지
+                                    : ''
                             }
                         />
                         <TextField
@@ -101,6 +94,16 @@ export default function SignUp() {
                                 인증번호 받기
                             </Button>
                         </Box>
+                        <Box className="email-field">
+                            <TextField
+                                label="인증번호"
+                                name="emailConfirm"
+                                className="input email-input"
+                            />
+                            <Button variant="contained" className="button email-verify">
+                                인증
+                            </Button>
+                        </Box>
                         <Button
                             variant="contained"
                             size="large"
@@ -114,4 +117,6 @@ export default function SignUp() {
             </div>
         </div>
     );
-}
+};
+
+export default SignUp;
