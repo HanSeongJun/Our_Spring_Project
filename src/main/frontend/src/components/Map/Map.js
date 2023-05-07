@@ -58,8 +58,6 @@ const Map = () => {
                 }
             }
         }
-
-
     }
 
     return(
