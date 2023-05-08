@@ -28,14 +28,17 @@ public class ParticulateMatter extends ApiCall{
 
     private final String serviceKey;
     private final String endPoint;
+    private final String predictDataEndPoint;
 
     private int totalGrade = 0;
     private int totalCount = 0;
 
     public ParticulateMatter(@Value("${api.particulate-matter.serviceKey}") String serviceKey,
-                             @Value("${api.particulate-matter.endPoint}") String endPoint){
+                             @Value("${api.particulate-matter.endPoint}") String endPoint,
+                             @Value("${api.particulate-matter.predict.endPoint}") String predictDataEndPoint){
         this.serviceKey = serviceKey;
         this.endPoint = endPoint;
+        this.predictDataEndPoint = predictDataEndPoint;
     }
 
     @Test
@@ -86,6 +89,45 @@ public class ParticulateMatter extends ApiCall{
 
     }
 
+    @Test
+    @DisplayName("전국에 대한 미세먼지 예측 데이터를 담은 Api Call Test")
+    public void ParticulateMatterPredictDataApiCallTest() throws IOException, ParseException {
+
+
+        String buildUrl = buildPredictDataUrl();
+
+        StringBuilder sb = getResponse(buildUrl);
+
+        System.out.println(sb.toString());
+        // JSONParser로 JSONObject로 변환
+        JSONParser parser = new JSONParser();
+        JSONObject jsonObject = (JSONObject) parser.parse(sb.toString());
+        System.out.println("jsonObject"  + jsonObject);
+
+        JSONObject extraResponse= (JSONObject) jsonObject.get("response");
+        System.out.println("extractResponse"  + extraResponse);
+
+        JSONObject extraBody= (JSONObject) extraResponse.get("body");
+        System.out.println("extractBody"  + extraBody);
+
+        JSONArray items = (JSONArray) extraBody.get("items");
+        System.out.println("items"  + items);
+
+        Object itemInfo = items.get(items.size()-1);//가장 마지막 데이터를 저장
+
+        Object informCauseData = ((JSONObject) itemInfo).get("informCause");
+        Object informOverallData = ((JSONObject) itemInfo).get("informCause");
+
+        try{
+            String informCause =  (String) informCauseData;
+            String informOverall =  (String) informOverallData;
+            System.out.println("informCause : " + informCause + "informOverall : " + informOverall );
+        }catch ( Exception e) {
+            System.out.println("error : " + e);
+        }
+
+    }
+
     private String buildUrl() throws UnsupportedEncodingException {
 
         StringBuilder urlBuilder = new StringBuilder(endPoint); /*URL*/
@@ -95,6 +137,17 @@ public class ParticulateMatter extends ApiCall{
         urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
         urlBuilder.append("&" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*serviceKey*/
         urlBuilder.append("&" + URLEncoder.encode("ver","UTF-8") + "=" + URLEncoder.encode("1.0", "UTF-8")); /*version*/
+        return urlBuilder.toString();
+    }
+
+    public String buildPredictDataUrl() throws UnsupportedEncodingException {
+
+        StringBuilder urlBuilder = new StringBuilder(predictDataEndPoint); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
+        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode("2023-05-08", "UTF-8"));
         return urlBuilder.toString();
     }
 
