@@ -108,6 +108,11 @@ insert into gu (id, gu_code, gu_name,city_id, vector) values  (25, 'CD11740', "�
 ,"M 726 320 l 1 7 3 9 0 9 1 9 1 10 1 5 -1 -1 -5 -1 -3 0 -4 2 -11 0 -8 1 -5 6 -4 5 -4 6 -2 4 -1 8 -4 7 -3 2 1 1 -1 2 -6 7 -1 8 -5 -2 -5 -3 -3 -2 -8 -4 -5 -3 -8 -5 -5 -2 0 -7 1 -3 2 -5 0 -8 -4 -4 -4 -2 -6 -2 -7 0 2 -4 2 -5 2 -10 4 -10 1 -1 4 -6 7 -6 5 -3 6 -3 8 -3 4 -1 5 0 11 0 9 -4 7 -5 8 -6 11 -6 11 0 0 7 3 6 z ");
 
 
-
 insert into spot(id, spot_name, comment, gu_id) values (1, "spot1" , "spot1은 사진작가라면 가봐야할 3대 바다 사진 스팟입니다.",1);
 insert into spot(id, spot_name, comment, gu_id) values (2, "spot2" , "spot2은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",1);
+insert into spot(id, spot_name, comment, gu_id) values (3, "spot3" , "spot3은 사진작가라면 가봐야할 3대 바다 사진 스팟입니다.",3);
+insert into spot(id, spot_name, comment, gu_id) values (4, "spot4" , "spot4은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",2);
+insert into spot(id, spot_name, comment, gu_id) values (5, "spot5" , "spot5은 사진작가라면 가봐야할 3대 바다 사진 스팟입니다.",2);
+insert into spot(id, spot_name, comment, gu_id) values (6, "spot6" , "spot6은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",6);
+insert into spot(id, spot_name, comment, gu_id) values (7, "spot7" , "spot7은 사진작가라면 가봐야할 3대 바다 사진 스팟입니다.",6);
+insert into spot(id, spot_name, comment, gu_id) values (8, "spot8" , "spot8은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",2);

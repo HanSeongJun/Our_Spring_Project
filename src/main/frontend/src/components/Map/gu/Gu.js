@@ -31,8 +31,7 @@ const Gu = () => {
     return (
         <div className="Gu">
             <div className="City">
-                {city_code === "CD11" && gu_code === "CD11140" && <Seoul />}
-                {city_code === "CD11" && gu_code === "CD11170" && <Seoul />}
+                {city_code === "CD11" && <Seoul />}
             </div>
             <div className="Spot">
                 {data.map((item, index) => (

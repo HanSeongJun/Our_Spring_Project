@@ -33,7 +33,7 @@ const Seoul = () => {
         console.log("서울시도에서 클릭한 구별 id값 -----> ", id);
         for(let i=0; i<data.length; i++){
             if(id===data[i]["guCode"]){
-                navigate(`/city/${id}`);
+                navigate(`/city/CD11/${id}`);
             }
         }
     }
