@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, Box, TextField } from '@mui/material';
+import { Container, TextField, Box } from '@mui/material';
 import Button from '@mui/material/Button';
 import { Link } from "react-router-dom";
 
@@ -60,18 +60,16 @@ export default function EditUser() {
             <div className="containerWrapper">
                 <Container>
                     <Box className="form">
-                        {user ? <TextField id="username" label="아이디" type="text" defaultValue={user.username} className="input" required/> : null}
-                        {user ? <TextField id="password" label="비밀번호" type="password" defaultValue={user.password} className="input" required/> : null}
-                        <TextField id="confirmPassword" label="비밀번호 확인" type="password" className="input" required/>
-                        {user ? <TextField id="nickname" label="닉네임" type="text" defaultValue={user.nickname} className="input" required/> : null}
-                        {user ? <TextField label="이메일" type="text" defaultValue={user.email} className="input" disabled/> : null}
+                        {user ? <TextField id="username" label="아이디" className="input" defaultValue={user.username} /> : null}
+                        {user ? <TextField id="password" label="비밀번호" type="password" className="input" defaultValue={user.password} /> : null}
+                        <TextField id="confirmPassword" label="비밀번호 확인" type="password" className="input"/>
+                        {user ? <TextField id="nickname" label="닉네임" className="input" defaultValue={user.nickname} /> : null}
+                        {user ? <TextField label="이메일" className="input" disabled defaultValue={user.email} /> : null}
                         <Button variant="contained" size="large" className="button" onClick={handleSubmit}>
                             변경하기
                         </Button>
-                        <Link to="/user/myPage" className="button">
-                            <Button variant="contained" size="large" className="button">
-                                취소
-                            </Button>
+                        <Link to="/user/myPage" className="link">
+                            취소
                         </Link>
                     </Box>
                 </Container>
