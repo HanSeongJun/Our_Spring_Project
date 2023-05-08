@@ -36,4 +36,17 @@ public class BuildUrl {
         urlBuilder.append("&" + URLEncoder.encode("ny","UTF-8") + "=" + URLEncoder.encode(yCode, "UTF-8")); /*예보지점의 Y 좌표값*/
         return urlBuilder.toString();
     }
+
+    //미세먼지 데이터 빌더
+    public static String buildPredictDataUrl(String serviceKey, String endPoint, String searchDate) throws UnsupportedEncodingException {
+
+        StringBuilder urlBuilder = new StringBuilder(endPoint); /*URL*/
+        urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=" + serviceKey); /*Service Key*/
+        urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+        urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("100", "UTF-8")); /*한 페이지 결과 수*/
+        urlBuilder.append("&" + URLEncoder.encode("returnType","UTF-8") + "=" + URLEncoder.encode("JSON", "UTF-8")); /*요청자료형식(XML/JSON) Default: XML*/
+        urlBuilder.append("&" + URLEncoder.encode("searchDate","UTF-8") + "=" + URLEncoder.encode(searchDate, "UTF-8"));
+        return urlBuilder.toString();
+    }
+
 }
