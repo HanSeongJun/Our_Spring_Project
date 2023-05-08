@@ -116,3 +116,6 @@ insert into spot(id, spot_name, comment, gu_id) values (5, "spot5" , "spot5은 �
 insert into spot(id, spot_name, comment, gu_id) values (6, "spot6" , "spot6은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",6);
 insert into spot(id, spot_name, comment, gu_id) values (7, "spot7" , "spot7은 사진작가라면 가봐야할 3대 바다 사진 스팟입니다.",6);
 insert into spot(id, spot_name, comment, gu_id) values (8, "spot8" , "spot8은 사진작가라면 가봐야할 3대 산 사진 스팟입니다.",2);
+
+insert into api_data(id, inform_cause, inform_overall, inform_sky, inform_pty) values (1,"  ","  ","  ","  ");
+

@@ -10,6 +10,7 @@ import backend.map.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.parser.ParseException;
+import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,10 +36,10 @@ public class ApiMapServiceImpl implements ApiMapService {
 
         // api를 활용해 grade를 판단하는 로직은 다른 thread 에서 하루에 한번씩 데이터가 들어가도록 설정 예정
 
-        Optional<ApiData> apiData = apiDataRepository.findById(0L);
-        ApiData getApiData = apiData.get();
+        List<ApiData> apiData = apiDataRepository.findAll();
+        ApiData getApiData = apiData.get(0);
 
-        ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(getApiData().getInformCause(), getApiData.getInformOverall());
+        ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(getApiData.getInformCause(), getApiData.getInformOverall());
         log.info("ApiMapServiceImpl/getApiData/particulatePredictInfoDto = {}", particulatePredictInfoDto);
 
         return particulatePredictInfoDto;
@@ -46,17 +47,16 @@ public class ApiMapServiceImpl implements ApiMapService {
 
     @Transactional
     @Scheduled(cron = "0 0 6 * * *" ) //매일 새벽 6시
-//    @Scheduled(cron = "30 * * * * *" ) //30초 반복 -> test용으로 사용한다.
+//    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataParti() throws IOException, ParseException {
 
         HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo("2023-05-08");
 
-        Optional<ApiData> apiData = apiDataRepository.findById(0L);
-        ApiData updateApiData = apiData.get();
-        ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(updateApiData.getInformCause(), updateApiData.getInformOverall());
-        updateApiData.updateParticul(particulatePredictInfoDto);
+        List<ApiData> apiData = apiDataRepository.findAll();
+        ApiData updateApiData = apiData.get(0);
 
-        return;
+        ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(particulatePredictInfo.get("informCause"),particulatePredictInfo.get("informOverall"));
+        updateApiData.updateParticul(particulatePredictInfoDto);
 
     }
 }
