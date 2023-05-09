@@ -2,50 +2,100 @@ import * as React from 'react';
 import { useState } from 'react';
 import { Container, TextField, Box } from '@mui/material';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import EmailValidator from 'email-validator';
 
 import './styles/SignUp.css';
 
-export default function SignUp() {
+const SignUp = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
         confirmPassword: '',
         nickname: '',
         email: '',
+        emailConfirm: '',
     });
+
+    const [emailConfirm, setEmailConfirm] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
+    const [textFieldColor, setTextFieldColor] = useState('primary');
+
+    const validateEmail = (email) => {
+        if (!EmailValidator.validate(email)) {
+            setErrorMsg('올바른 이메일 형식이 아닙니다.');
+            setTextFieldColor('error');
+            return false;
+        }
+        return true;
+    };
+
+    const handleEmailVerification = () => {
+        if (!validateEmail(formData.email.trim())) {
+            return;
+        }
+
+        fetch(`/user/emailConfirm?email=${formData.email}`, {
+            method: 'POST',
+        })
+            .then((response) => response.text())
+            .then((data) => {
+                setEmailConfirm(data);
+                setErrorMsg('인증번호가 전송되었습니다.');
+                setTextFieldColor('primary');
+            })
+            .catch((error) => {
+                console.error(error);
+                setErrorMsg('인증번호 전송에 실패했습니다.');
+                setTextFieldColor('error');
+            });
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
+
+        if (name === 'email' && value.trim() !== '') {
+            if (!validateEmail(value)) {
+                return;
+            }
+
+            fetch(`/user/checkEmail?email=${value}`)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.exists) {
+                        setErrorMsg('이미 존재하는 이메일입니다.');
+                        setTextFieldColor('error');
+                    } else {
+                        setErrorMsg('사용 가능한 이메일입니다.');
+                        setTextFieldColor('success');
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        }
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (formData.password !== formData.confirmPassword) {
-            // 비밀번호와 비밀번호 확인이 일치하지 않는 경우
-            alert("비밀번호가 일치하지 않습니다.");
+            alert('비밀번호가 일치하지 않습니다.');
             return;
         }
 
-        // 회원가입 데이터를 백엔드로 전송
-        fetch('/user/signUp', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        })
-            .then((response) => response.text())
-            .then((data) => {
-                console.log(data);
-                // 회원가입 완료 폼으로 이동
-                window.location.href = '/user/signUpComplete';
-            })
-            .catch((error) => {
-                console.error(error);
+        try {
+            await fetch('/user/signUp', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
             });
+            window.location.href = '/user/signUpComplete';
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -73,19 +123,22 @@ export default function SignUp() {
                             name="confirmPassword"
                             type="password"
                             className="input"
-                            value={formData.confirmPassword}
-                            onChange={handleInputChange}
                             error={formData.password !== formData.confirmPassword} // 오류 상태 여부
                             helperText={
                                 formData.password !== formData.confirmPassword
                                     ? '비밀번호가 일치하지 않습니다.'
                                     : '' // 오류 메시지
                             }
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
                         />
                         <TextField
                             label="닉네임"
                             name="nickname"
                             className="input"
+                            color={textFieldColor}
+                            error={errorMsg}
+                            helperText={errorMsg}
                             value={formData.nickname}
                             onChange={handleInputChange}
                         />
@@ -94,11 +147,31 @@ export default function SignUp() {
                                 label="이메일"
                                 name="email"
                                 className="input email-input"
+                                color={textFieldColor}
+                                error={errorMsg}
+                                helperText={errorMsg}
                                 value={formData.email}
                                 onChange={handleInputChange}
                             />
-                            <Button variant="contained" className="button email-verify">
+                            <Button
+                                variant="contained"
+                                className="button email-verify"
+                                onClick={handleEmailVerification}
+                            >
                                 인증번호 받기
+                            </Button>
+                        </Box>
+                        <Box className="email-field">
+                            <TextField
+                                label="인증번호"
+                                name="emailConfirm"
+                                className="input email-input"
+                            />
+                            <Button
+                                variant="contained"
+                                className="button email-verify"
+                            >
+                                인증
                             </Button>
                         </Box>
                         <Button
@@ -114,4 +187,6 @@ export default function SignUp() {
             </div>
         </div>
     );
-}
+};
+
+export default SignUp;
