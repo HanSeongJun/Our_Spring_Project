@@ -39,3 +39,4 @@ out/
 ## application yaml
 /src/main/resources/application.yaml
 /src/main/resources/api.yml
+/src/main/resources/email.properties

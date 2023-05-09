@@ -2,67 +2,69 @@ package backend.User.controller;
 
 import backend.User.entity.dto.UserDto;
 import backend.User.service.UserService;
+import backend.User.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final UserService userService;
+    private final EmailService emailService;
 
     // == 회원가입 ==
     @PostMapping("/signUp")
-    public String signUp(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> signUp(@RequestBody UserDto userDto) {
         userService.save(userDto);
-        System.out.println("UserController.signUp");
-        return "SignUp complete";
+        log.info("UserController.signUp()");
+        return ResponseEntity.ok("{\"message\": \"SignUp complete\"}");
     }
 
     // == 로그인 ==
     @PostMapping("/logIn")
     public ResponseEntity<String> logIn(@RequestBody UserDto userDto, HttpSession session) {
-
         UserDto loginResult = userService.login(userDto);
-        System.out.println("UserController.logIn");
+        log.info("UserController.logIn()");
 
         if (loginResult != null) {
-            // 로그인 성공
             session.setAttribute("loginUser", loginResult);
             return ResponseEntity.ok("{\"message\": \"login complete\"}");
         } else {
-            // 로그인 실패
             return ResponseEntity.badRequest().body("{\"message\": \"login fail\"}");
         }
     }
 
-    // == 마이페이지(상세 회원정보 조회) ==
+    // == 마이페이지 ==
     @GetMapping("/myPage")
-    public UserDto myPage(HttpSession session) {
-        // HttpSession에서 로그인한 유저 정보 읽어오기
+    public ResponseEntity<UserDto> myPage(HttpSession session) {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 
         if (loginUser == null) {
             // 로그인하지 않은 경우
-            return null;
+            return ResponseEntity.status(401).build();
         }
-        System.out.println("loginUser = " + loginUser);
 
-        // 로그인한 유저 정보 반환
-        return loginUser;
+        log.info("UserController.myPage()");
+        log.info("loginUser = " + loginUser);
+
+        return ResponseEntity.ok(loginUser);
     }
 
     // == 회원정보 수정 ==
     @PutMapping("/update")
-    public String update(@RequestBody UserDto userDto, HttpSession session) {
-        // HttpSession에서 로그인한 유저 정보 읽어오기
+    public ResponseEntity<String> update(@RequestBody UserDto userDto, HttpSession session) {
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
 
-        // 회원 정보 수정
         UserDto newUserDto = UserDto.builder()
                 .username(userDto.getUsername())
                 .password(userDto.getPassword())
@@ -75,9 +77,9 @@ public class UserController {
         // 로그인한 사용자의 세션 정보 업데이트
         session.setAttribute("loginUser", newUserDto);
 
-        System.out.println("UserController.update");
+        log.info("UserController.update()");
 
-        return "Update complete";
+        return ResponseEntity.ok("{\"message\": \"Update complete\"}");
     }
 
     // == 로그아웃 ==
@@ -92,5 +94,31 @@ public class UserController {
         } else {
             return ResponseEntity.badRequest().body("{\"message\": \"user not logged in\"}");
         }
+    }
+
+    // == 이메일 인증 ==
+    @PostMapping("/emailConfirm")
+    public ResponseEntity<String> emailConfirm(@RequestParam String email) throws Exception {
+        if (!EmailValidator.getInstance().isValid(email)) {
+            return ResponseEntity.badRequest().body("{\"message\": \"Invalid email format\"}");
+        }
+
+        if (emailService.isEmailExists(email)) {
+            return ResponseEntity.badRequest().body("{\"message\": \"Email already exists\"}");
+        }
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return ResponseEntity.ok(confirm);
+    }
+
+    // == 이메일 검증 ==
+    @GetMapping("/checkEmail")
+    public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
+        boolean exists = emailService.isEmailExists(email);
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("exists", exists);
+
+        return ResponseEntity.ok(result);
     }
 }
