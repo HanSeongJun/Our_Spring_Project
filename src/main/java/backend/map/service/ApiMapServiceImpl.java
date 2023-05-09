@@ -1,10 +1,13 @@
 package backend.map.service;
 
 import backend.map.api.ParticulateMatter;
+import backend.map.api.Weather;
 import backend.map.entity.ApiData;
 import backend.map.entity.City;
+import backend.map.entity.dto.ApiInfoDto;
 import backend.map.entity.dto.CityMapInfoDto;
 import backend.map.entity.dto.ParticulatePredictInfoDto;
+import backend.map.entity.dto.WeatherInfoDto;
 import backend.map.repository.ApiDataRepository;
 import backend.map.repository.CityRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,11 +33,10 @@ public class ApiMapServiceImpl implements ApiMapService {
 
     private final ApiDataRepository apiDataRepository;
     private final ParticulateMatter particulateMatter;
+    private final Weather weather;
 
 
-    public ParticulatePredictInfoDto getApiData() {
-
-        // api를 활용해 grade를 판단하는 로직은 다른 thread 에서 하루에 한번씩 데이터가 들어가도록 설정 예정
+    public ApiInfoDto getApiData() {
 
         List<ApiData> apiData = apiDataRepository.findAll();
         ApiData getApiData = apiData.get(0);
@@ -42,21 +44,42 @@ public class ApiMapServiceImpl implements ApiMapService {
         ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(getApiData.getInformCause(), getApiData.getInformOverall());
         log.info("ApiMapServiceImpl/getApiData/particulatePredictInfoDto = {}", particulatePredictInfoDto);
 
-        return particulatePredictInfoDto;
+        WeatherInfoDto weatherInfoDto = new WeatherInfoDto(getApiData.getInformSky(), getApiData.getInformPty());
+        log.info("ApiMapServiceImpl/getApiData/weatherInfoDto = {}", weatherInfoDto);
+
+        ApiInfoDto apiInfoDto = new ApiInfoDto(particulatePredictInfoDto,weatherInfoDto);
+        log.info("ApiMapServiceImpl/getApiData/apiInfoDto = {}", apiInfoDto);
+
+        return apiInfoDto;
     }
 
     @Transactional
-    @Scheduled(cron = "0 0 6 * * *" ) //매일 새벽 6시
-//    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
+//    @Scheduled(cron = "0 0 6 * * *" ) //매일 새벽 6시
+    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataParti() throws IOException, ParseException {
 
-        HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo("2023-05-08");
+        HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo("2023-05-09");
 
         List<ApiData> apiData = apiDataRepository.findAll();
         ApiData updateApiData = apiData.get(0);
 
         ParticulatePredictInfoDto particulatePredictInfoDto = new ParticulatePredictInfoDto(particulatePredictInfo.get("informCause"),particulatePredictInfo.get("informOverall"));
         updateApiData.updateParticul(particulatePredictInfoDto);
+
+    }
+
+    @Transactional
+//    @Scheduled(cron = "0 0 6 * * *" )
+    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
+    public void updateApiDataWeather() throws IOException, ParseException {
+
+        HashMap<String, String> weatherState = weather.extractWeatherState("60", "120");
+
+        List<ApiData> apiData = apiDataRepository.findAll();
+        ApiData updateApiData = apiData.get(0);
+
+        WeatherInfoDto weatherInfoDto = new WeatherInfoDto(weatherState.get("informSky"),weatherState.get("informPty"));
+        updateApiData.updateWeather(weatherInfoDto);
 
     }
 }

@@ -1,8 +1,7 @@
 package backend.map.controller;
 
+import backend.map.entity.dto.ApiInfoDto;
 import backend.map.entity.dto.CityMapInfoDto;
-import backend.map.entity.dto.ParticulatePredictInfoDto;
-import backend.map.service.ApiMapService;
 import backend.map.service.ApiMapServiceImpl;
 import backend.map.service.CityServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -26,10 +25,10 @@ public class CityController {
     @GetMapping("/citymap")
     public HashMap<String, HashMap> cityMap(){
         List<CityMapInfoDto> cityMap = cityService.getCityMap();
-        ParticulatePredictInfoDto apiData = apiMapService.getApiData();
+        ApiInfoDto apiData = apiMapService.getApiData();
 
         HashMap<String , List> cityMapResult = new HashMap<>();
-        HashMap<String , ParticulatePredictInfoDto> apiDataResult = new HashMap<>();
+        HashMap<String, ApiInfoDto> apiDataResult = new HashMap<>();
         cityMapResult.put("city_data", cityMap);
         apiDataResult.put("api_data", apiData);
 
