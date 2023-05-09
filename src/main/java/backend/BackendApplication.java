@@ -19,7 +19,4 @@ public class BackendApplication {
 				.run(args);
 //		SpringApplication.run(BackendApplication.class, args);
 	}
-
-
-
 }
