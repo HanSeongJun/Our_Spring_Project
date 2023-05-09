@@ -9,8 +9,6 @@ export default function Login() {
 
     const navigate = useNavigate();
 
-    const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('loginUser') === 'true');
-
     const handleSubmit = async (event) => {
         event.preventDefault(); // 기본 동작 방지
         const formData = new FormData(event.target);
@@ -18,18 +16,26 @@ export default function Login() {
             username: formData.get('username'),
             password: formData.get('password'),
         };
-        const response = await fetch('/user/logIn', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(userDto), // 요청 데이터를 JSON 형태로 변환
-        });
-        const result = await response.json();
-        if (result.message === 'login complete') {
-            sessionStorage.setItem('loginUser', 'true');
-            setIsLoggedIn(true);
-            navigate('/home'); // 로그인 성공 시 /home으로 이동
+        try {
+            const response = await fetch('/user/logIn', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(userDto),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                sessionStorage.setItem('loginUser', 'true');
+                navigate('/home');
+            } else {
+                alert(result.message);
+            }
+        } catch (error) {
+            console.error(error);
+            alert('로그인에 실패하였습니다.');
         }
     };
 
@@ -39,9 +45,9 @@ export default function Login() {
                 <Container>
                     <Box className="form">
                         <form onSubmit={handleSubmit}>
-                            <TextField label="아이디" name="username" className="input" />
-                            <TextField label="비밀번호" name="password" type="password" className="input" />
-                            <Button type="submit" variant="contained" size="large">
+                            <TextField label="아이디" name="username" className="input" sx={{ mb: 2 }}/>
+                            <TextField label="비밀번호" name="password" type="password" className="input" sx={{ mb: 2 }}/>
+                            <Button type="submit" variant="contained" size="large" className="input">
                                 로그인
                             </Button>
                         </form>
