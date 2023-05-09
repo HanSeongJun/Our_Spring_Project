@@ -136,9 +136,6 @@ const SignUp = () => {
                             label="닉네임"
                             name="nickname"
                             className="input"
-                            color={textFieldColor}
-                            error={errorMsg}
-                            helperText={errorMsg}
                             value={formData.nickname}
                             onChange={handleInputChange}
                         />
