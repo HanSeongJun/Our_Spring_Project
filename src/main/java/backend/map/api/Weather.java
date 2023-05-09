@@ -51,7 +51,7 @@ public class Weather {
                 valueSky = Integer.parseInt(fcstValue.toString());
             } else if (category.toString().equals("PTY")) {
                 //다른 속성처럼 4단계로 정규화
-                nomalizePTY(fcstValue);
+                normalizePTY(fcstValue);
             }
 
         }
@@ -63,15 +63,15 @@ public class Weather {
 
     }
 
-    private void nomalizePTY(Object fcstValue) {
+    private void normalizePTY(Object fcstValue) {
         //8단계로 구성됨.
         if (fcstValue.equals("0") || fcstValue.equals("1")) {
             valuePty = 1;
-        } else if (fcstValue.equals("1") || fcstValue.equals("3")) {
+        } else if (fcstValue.equals("2") || fcstValue.equals("3")) {
             valuePty = 2;
-        } else if (fcstValue.equals("1") || fcstValue.equals("3")) {
+        } else if (fcstValue.equals("4") || fcstValue.equals("5")) {
             valuePty = 3;
-        } else {
+        } else {//6 or 7일때
             valuePty = 4;
         }
     }
