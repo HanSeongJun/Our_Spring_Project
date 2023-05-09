@@ -1,5 +1,8 @@
 package backend.User.service.email;
 
+import backend.User.entity.QUser;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
@@ -56,13 +59,14 @@ public class EmailService {
         return ePw;
     }
 
+    // == 이메일 중복 검증 ==
     public boolean isEmailExists(String email) {
-        // EntityManager를 사용하여 데이터베이스에서 이메일 중복 검사
-        String jpql = "SELECT COUNT(e) FROM User e WHERE e.email = :email";
-        Long count = em.createQuery(jpql, Long.class)
-                .setParameter("email", email)
-                .getSingleResult();
-
+        QUser user = QUser.user;
+        BooleanExpression emailPredicate = user.email.eq(email);
+        long count = new JPAQueryFactory(em)
+                .selectFrom(user)
+                .where(emailPredicate)
+                .fetchCount();
         return count > 0;
     }
 }
