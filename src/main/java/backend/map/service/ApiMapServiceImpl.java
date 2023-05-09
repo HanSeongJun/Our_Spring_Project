@@ -54,8 +54,8 @@ public class ApiMapServiceImpl implements ApiMapService {
     }
 
     @Transactional
-//    @Scheduled(cron = "0 0 6 * * *" ) //매일 새벽 6시
-    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
+    @Scheduled(cron = "0 0 6 * * *" ) //매일 새벽 6시
+//    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataParti() throws IOException, ParseException {
 
         HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo("2023-05-09");
@@ -69,8 +69,8 @@ public class ApiMapServiceImpl implements ApiMapService {
     }
 
     @Transactional
-//    @Scheduled(cron = "0 0 6 * * *" )
-    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
+    @Scheduled(cron = "0 0 6 * * *" )
+//    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataWeather() throws IOException, ParseException {
 
         HashMap<String, String> weatherState = weather.extractWeatherState("60", "120");
