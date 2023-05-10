@@ -20,10 +20,7 @@ public class EmailService {
 
     private final JavaMailSender emailSender;
 
-    // 인증번호 생성
-    public static final String ePw = UUID.randomUUID().toString().substring(0, 8);
-
-    private MimeMessage createMessage(String to)throws Exception {
+    private MimeMessage createMessage(String to, String ePw)throws Exception {
 
         System.out.println("보내는 대상 : "+ to);
         System.out.println("인증 번호 : "+ePw);
@@ -42,8 +39,11 @@ public class EmailService {
 
     @Transactional
     public String sendSimpleMessage(String to)throws Exception {
+
+        String ePw = UUID.randomUUID().toString().substring(0, 8);
+
         // TODO Auto-generated method stub
-        MimeMessage message = createMessage(to);
+        MimeMessage message = createMessage(to, ePw);
 
         try {
             emailSender.send(message);
