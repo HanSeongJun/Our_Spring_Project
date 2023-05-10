@@ -87,6 +87,7 @@ public class UserController {
     public ResponseEntity<String> logOut(HttpSession session) {
 
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+        log.info("UserController.logOut()");
 
         if (loginUser != null) {
             session.removeAttribute("loginUser");
@@ -110,7 +111,6 @@ public class UserController {
 
         return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
     }
-
 
     // == 아이디 중복 검증 ==
     @GetMapping("/checkUserName")

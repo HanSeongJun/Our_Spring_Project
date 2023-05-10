@@ -135,7 +135,6 @@ const SignUp = () => {
                 } else {
                     const response = JSON.parse(data);
                     if (response.exists) {
-                        alert('이미 존재하는 이메일입니다.');
                         setEmailVerificationDisabled(true); // 버튼 비활성화
                     } else {
                         setEmailConfirm(response.confirm);
