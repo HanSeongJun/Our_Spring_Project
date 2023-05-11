@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Container, TextField, Box } from '@mui/material';
+import {Container, TextField, Box, IconButton} from '@mui/material';
 import Button from '@mui/material/Button';
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import './styles/Login.css';
+import * as React from "react";
 
 export default function Login() {
 
@@ -50,6 +50,23 @@ export default function Login() {
                             <Button type="submit" variant="contained" size="large" className="input">
                                 로그인
                             </Button>
+                            <div className="buttonWrapper">
+                                <Link to="/forgotUsername">
+                                    <Button variant="text">
+                                        아이디 찾기
+                                    </Button>
+                                </Link>
+                                <Link to="/forgotPassword">
+                                    <Button variant="text">
+                                        비밀번호 찾기
+                                    </Button>
+                                </Link>
+                                <Link to="/user/signUp">
+                                    <Button variant="text" sx={{ ml: 17 }}>
+                                        회원가입
+                                    </Button>
+                                </Link>
+                            </div>
                         </form>
                     </Box>
                 </Container>

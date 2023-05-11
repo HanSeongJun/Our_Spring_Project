@@ -1,17 +1,22 @@
 package backend.User.service;
 
+import backend.User.entity.QUser;
 import backend.User.entity.User;
 import backend.User.entity.dto.UserDto;
 import backend.User.repository.UserRepository;
+import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+    private final EntityManager em;
     private final UserRepository userRepository;
 
     // == 회원가입 ==
@@ -39,5 +44,38 @@ public class UserService {
                     return user.getId();
                 })
                 .orElse(null);
+    }
+
+    // == 아이디 중복 검증 ==
+    public boolean isUserNameExists(String username) {
+        QUser user = QUser.user;
+        BooleanExpression UserNamePredicate = user.username.eq(username);
+        long count = new JPAQueryFactory(em)
+                .selectFrom(user)
+                .where(UserNamePredicate)
+                .fetchCount();
+        return count > 0;
+    }
+
+    // == 닉네임 중복 검증 ==
+    public boolean isNickNameExists(String nickname) {
+        QUser user = QUser.user;
+        BooleanExpression NickNamePredicate = user.nickname.eq(nickname);
+        long count = new JPAQueryFactory(em)
+                .selectFrom(user)
+                .where(NickNamePredicate)
+                .fetchCount();
+        return count > 0;
+    }
+
+    // == 이메일 중복 검증 ==
+    public boolean isEmailExists(String email) {
+        QUser user = QUser.user;
+        BooleanExpression emailPredicate = user.email.eq(email);
+        long count = new JPAQueryFactory(em)
+                .selectFrom(user)
+                .where(emailPredicate)
+                .fetchCount();
+        return count > 0;
     }
 }

@@ -87,6 +87,7 @@ public class UserController {
     public ResponseEntity<String> logOut(HttpSession session) {
 
         UserDto loginUser = (UserDto) session.getAttribute("loginUser");
+        log.info("UserController.logOut()");
 
         if (loginUser != null) {
             session.removeAttribute("loginUser");
@@ -96,26 +97,45 @@ public class UserController {
         }
     }
 
-    // == 이메일 인증 ==
     @PostMapping("/emailConfirm")
     public ResponseEntity<String> emailConfirm(@RequestParam String email) throws Exception {
         if (!EmailValidator.getInstance().isValid(email)) {
             return ResponseEntity.badRequest().body("{\"message\": \"Invalid email format\"}");
         }
 
-        if (emailService.isEmailExists(email)) {
+        if (userService.isEmailExists(email)) {
             return ResponseEntity.badRequest().body("{\"message\": \"Email already exists\"}");
         }
 
         String confirm = emailService.sendSimpleMessage(email);
 
-        return ResponseEntity.ok(confirm);
+        return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
     }
 
-    // == 이메일 검증 ==
+    // == 아이디 중복 검증 ==
+    @GetMapping("/checkUserName")
+    public ResponseEntity<Map<String, Boolean>> checkUserName(@RequestParam String username) {
+        boolean exists = userService.isUserNameExists(username);
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("exists", exists);
+
+        return ResponseEntity.ok(result);
+    }
+
+    // == 닉네임 중복 검증 ==
+    @GetMapping("/checkNickName")
+    public ResponseEntity<Map<String, Boolean>> checkNickName(@RequestParam String nickname) {
+        boolean exists = userService.isNickNameExists(nickname);
+        Map<String, Boolean> result = new HashMap<>();
+        result.put("exists", exists);
+
+        return ResponseEntity.ok(result);
+    }
+
+    // == 이메일 중복 검증 ==
     @GetMapping("/checkEmail")
     public ResponseEntity<Map<String, Boolean>> checkEmail(@RequestParam String email) {
-        boolean exists = emailService.isEmailExists(email);
+        boolean exists = userService.isEmailExists(email);
         Map<String, Boolean> result = new HashMap<>();
         result.put("exists", exists);
 
