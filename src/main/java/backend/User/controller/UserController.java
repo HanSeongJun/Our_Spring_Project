@@ -97,6 +97,7 @@ public class UserController {
         }
     }
 
+    // == 이메일 인증 ==
     @PostMapping("/emailConfirm")
     public ResponseEntity<String> emailConfirm(@RequestParam String email) throws Exception {
         if (!EmailValidator.getInstance().isValid(email)) {
@@ -107,6 +108,14 @@ public class UserController {
             return ResponseEntity.badRequest().body("{\"message\": \"Email already exists\"}");
         }
 
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
+    }
+
+    // 아이디 찾기 전용 이메일 인증 컨트롤러
+    @PostMapping("/findIdEmailConfirm")
+    public ResponseEntity<String> findIdEmailConfirm(@RequestParam String email) throws Exception {
         String confirm = emailService.sendSimpleMessage(email);
 
         return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
