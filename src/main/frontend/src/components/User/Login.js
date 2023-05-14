@@ -51,7 +51,7 @@ export default function Login() {
                                 로그인
                             </Button>
                             <div className="buttonWrapper">
-                                <Link to="/forgotUsername">
+                                <Link to="/user/FindId">
                                     <Button variant="text">
                                         아이디 찾기
                                     </Button>

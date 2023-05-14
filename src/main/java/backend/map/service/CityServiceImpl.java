@@ -41,7 +41,6 @@ public class CityServiceImpl implements CityService{
             CityMapInfoDto cityMapInfoDto = new CityMapInfoDto(city.getCityCode(), city.getCityName(), city.getGrade(), city.getVector());
             cityMapInfoDtoList.add(cityMapInfoDto);
         }
-        log.info("CityServiceImpl/getCityMap/cityMapInfoDtoList = {}", cityMapInfoDtoList);
 
         return cityMapInfoDtoList;
     }

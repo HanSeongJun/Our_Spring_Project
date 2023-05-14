@@ -13,6 +13,7 @@ import ListBoard from "./components/Board/ListBoard";
 import UploadBoard from "./components/Board/UploadBoard";
 import DetailBoard from "./components/Board/DetailBoard";
 import Navbar from "./components/Navbar";
+import FindId from "./components/User/FindId";
 
 function App() {
     return(
@@ -28,6 +29,7 @@ function App() {
                     <Route path="/user/editUserComplete" element={<EditUserComplete />} />
                     <Route path="/user/myPage" element={<MyPage />} />
                     <Route path="/user/signUpComplete" element={<SignUpComplete />} />
+                    <Route path="/user/FindId" element={<FindId />} />
 
                     // Map
                     <Route path='/home' element = {<Home />} />
