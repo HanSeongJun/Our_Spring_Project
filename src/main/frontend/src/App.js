@@ -15,6 +15,7 @@ import DetailBoard from "./components/Board/DetailBoard";
 import Navbar from "./components/Navbar";
 import FindId from "./components/User/FindId";
 import FindUserId from "./components/User/FindUserId";
+import FindPassword from "./components/User/FindPassword";
 
 function App() {
     return(
@@ -32,6 +33,7 @@ function App() {
                     <Route path="/user/signUpComplete" element={<SignUpComplete />} />
                     <Route path="/user/FindId" element={<FindId />} />
                     <Route path="/user/FindUserId" element={<FindUserId />} />
+                    <Route path="/user/FindPassword" element={<FindPassword />} />
 
                     // Map
                     <Route path='/home' element = {<Home />} />

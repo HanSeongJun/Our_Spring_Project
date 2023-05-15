@@ -56,7 +56,7 @@ export default function Login() {
                                         아이디 찾기
                                     </Button>
                                 </Link>
-                                <Link to="/forgotPassword">
+                                <Link to="/user/FindPassword">
                                     <Button variant="text">
                                         비밀번호 찾기
                                     </Button>

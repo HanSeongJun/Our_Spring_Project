@@ -120,7 +120,7 @@ export default function FindId() {
     return (
         <div className="container">
             <div className="containerWrapper">
-                <Typography >이메일 인증하기</Typography>
+                <Typography >아이디 찾기</Typography>
                 <Box className="email-field" sx={{ mb: 3 }}>
                     <TextField
                         label="이메일"
