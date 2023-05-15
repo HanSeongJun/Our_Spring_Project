@@ -16,6 +16,7 @@ import Navbar from "./components/Navbar";
 import FindId from "./components/User/FindId";
 import FindUserId from "./components/User/FindUserId";
 import FindPassword from "./components/User/FindPassword";
+import NewUserPassword from "./components/User/NewUserPassword";
 
 function App() {
     return(
@@ -34,6 +35,7 @@ function App() {
                     <Route path="/user/FindId" element={<FindId />} />
                     <Route path="/user/FindUserId" element={<FindUserId />} />
                     <Route path="/user/FindPassword" element={<FindPassword />} />
+                    <Route path="/user/NewUserPassword" element={<NewUserPassword />} />
 
                     // Map
                     <Route path='/home' element = {<Home />} />

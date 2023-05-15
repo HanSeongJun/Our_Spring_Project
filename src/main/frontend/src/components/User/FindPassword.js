@@ -24,7 +24,7 @@ export default function FindPassword() {
                         인증
                     </Button>
                 </Box>
-                <Link to="/user/FindUserId">
+                <Link to="/user/NewUserPassword">
                     <Button type="submit" variant="contained" size="large" className="input">
                         비밀번호 찾기
                     </Button>
