@@ -93,9 +93,10 @@ export default function FindId() {
         }
     };
 
-    // 회원가입 버튼
+    // 아이디 찾기 버튼
     const handleSubmit = async (event) => {
         event.preventDefault();
+
 
         // 이메일 인증 확인
         if (!emailConfirm) {

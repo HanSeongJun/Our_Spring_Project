@@ -113,9 +113,17 @@ public class UserController {
         return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
     }
 
-    // 아이디 찾기 전용 이메일 인증 컨트롤러
+    // 아이디 찾기 이메일 인증
     @PostMapping("/findIdEmailConfirm")
     public ResponseEntity<String> findIdEmailConfirm(@RequestParam String email) throws Exception {
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
+    }
+
+    // 비밀번호 찾기 이메일 인증
+    @PostMapping("/findPasswordEmailConfirm")
+    public ResponseEntity<String> findPasswordEmailConfirm(@RequestParam String email) throws Exception {
         String confirm = emailService.sendSimpleMessage(email);
 
         return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
