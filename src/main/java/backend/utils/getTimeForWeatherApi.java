@@ -9,7 +9,7 @@ import java.time.ZoneId;
 @Slf4j
 public class getTimeForWeatherApi {
 
-    public static String getHourTimeCode(){
+    public static String getTodayDate(){
         // 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
         LocalDateTime now = LocalDateTime.now();
 
@@ -18,10 +18,35 @@ public class getTimeForWeatherApi {
         LocalDate Now = LocalDate.now(zid);
 
         // 결과 출력
-        String hour = Now.toString().substring(11,13);
-        log.info("getTimeForWeatherApi/Now = {}"+ hour); //2022-02-20T16:00:26.857433+09:00[Asia/Seoul]
 
-        return hour;
+        String year = Integer.toString(Now.getYear());
+        String month = Integer.toString(Now.getMonthValue());
+        String day = Integer.toString(Now.getDayOfMonth());
+
+        month = changeMonthFormat(month);
+
+        log.info("getTimeForWeatherApi/getTodayDate/{}",year.concat(month).concat(day));
+        String date = day.concat(year.concat(month));
+
+
+        return date;
     }
+
+    public static String getParSearchDate(){
+        String tempDate = getTimeForWeatherApi.getTodayDate();
+
+        String searchDate = tempDate.substring(0,4) + "-" + tempDate.substring(5,7) + "-" + tempDate.substring(7,9);
+        return searchDate;
+    }
+
+
+
+    private static String changeMonthFormat(String month) {
+        if (month.length() == 1){
+            month = "0".concat(month);
+        }
+        return month;
+    }
+
 
 }

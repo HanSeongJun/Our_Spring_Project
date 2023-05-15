@@ -66,9 +66,9 @@ public class ParticulateMatter extends ApiCall {
 
     }
 
-    public HashMap<String, String> extractParticulatePredictInfo(String searchDate) throws IOException, ParseException {
+    public HashMap<String, String> extractParticulatePredictInfo() throws IOException, ParseException {
 
-        String buildUrl = buildPredictDataUrl(serviceKey, predictDataEndPoint, searchDate);
+        String buildUrl = buildPredictDataUrl(serviceKey, predictDataEndPoint);
         StringBuilder response = getResponse(buildUrl);
 
         // JSONParser로 JSONObject로 변환

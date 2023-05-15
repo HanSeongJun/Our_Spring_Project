@@ -11,6 +11,7 @@ const Map = () => {
     let navigate = useNavigate();
 
     const [data, setData] = useState([]);
+    const [apidata, setApiData] = useState([]);
 
     //backend grade를 기준으로 3단계로 영역마다 색을 칠해야함. -> 우선 서울만 진행
 
@@ -22,8 +23,8 @@ const Map = () => {
                 console.log(response);
                 const json = await response.json();
                 console.log(json);
-                setData(json.data);
-
+                setData(json.city_data["city_data"]);
+                setApiData(json.api_data["api_data"]);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -31,7 +32,6 @@ const Map = () => {
 
         fetchData();
     }, []);
-
 
     const HandleTagClick = (id) => {
         console.log("전국지도에서 클릭한 city의 id값 -----> ", id);
@@ -62,9 +62,27 @@ const Map = () => {
 
     return(
         <div className="Map">
+
+            <div className="Weather">
+                <p>오늘의 하늘상태와 강수형태는?</p>
+                <p>{apidata.informSky}</p>
+                <p>{apidata.informPty}</p>
+
+            </div>
+
+            <div className="ParticulateMater">
+                <p>오늘의 미세먼지🍀 상태는? </p>
+                <p>{apidata.informCause}</p>
+                <p>{apidata.informOverall}</p>
+
+            </div>
+            <br />
+
             <div className="Grade3_1">
                 <div>
-                    <p>1등급(매우좋음) 2등급(보통) 3등급(나쁨)</p>
+                    <p className="Grade1">1등급(매우좋음)</p>
+                    <p className="Grade2">2등급(보통)</p>
+                    <p className="Grade3">3등급(나쁨)</p>
                 </div>
             </div>
             <div className="Grade3_2">

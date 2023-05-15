@@ -58,7 +58,8 @@ public class ApiMapServiceImpl implements ApiMapService {
 //    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataParti() throws IOException, ParseException {
 
-        HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo("2023-05-09");
+
+        HashMap<String,String> particulatePredictInfo = particulateMatter.extractParticulatePredictInfo();
 
         List<ApiData> apiData = apiDataRepository.findAll();
         ApiData updateApiData = apiData.get(0);

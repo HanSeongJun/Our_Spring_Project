@@ -1,5 +1,6 @@
 package backend.map.api;
 
+import backend.utils.getTimeForWeatherApi;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -104,6 +105,7 @@ public class Weather {
     }
 
     public void extractWeather(String xCode, String yCode) throws IOException, ParseException {
+
         String buildUrl = buildUrl(serviceKey, endPoint, "60", "120");
         StringBuilder response = getResponse(buildUrl);
 
