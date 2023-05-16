@@ -78,4 +78,14 @@ public class UserService {
                 .fetchCount();
         return count > 0;
     }
+
+    // 이메일 기반으로 아이디 찾기
+    public String findUserIdByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user.getUsername();
+        } else {
+            return null;
+        }
+    }
 }

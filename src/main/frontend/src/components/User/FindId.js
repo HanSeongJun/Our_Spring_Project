@@ -88,6 +88,7 @@ export default function FindId() {
             setEmailConfirmErrorMsg('인증번호가 일치하지 않습니다.');
             setEmailConfirmTextFieldColor('error');
         } else {
+            sessionStorage.setItem('verifiedEmail', formData.email);
             setEmailConfirmErrorMsg('인증이 완료되었습니다.');
             setEmailConfirmTextFieldColor('primary');
         }
@@ -112,6 +113,7 @@ export default function FindId() {
             //     },
             //     body: JSON.stringify(formData),
             // });
+            sessionStorage.setItem('verifiedEmail', formData.email);
             window.location.href = '/user/FindUserId';
         } catch (error) {
             console.error(error);

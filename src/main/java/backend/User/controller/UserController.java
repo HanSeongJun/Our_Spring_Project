@@ -6,6 +6,7 @@ import backend.User.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -157,5 +158,16 @@ public class UserController {
         result.put("exists", exists);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/findUserId")
+    public ResponseEntity<String> findUserIdByEmail(@RequestParam String email) {
+        String userId = userService.findUserIdByEmail(email);
+
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
