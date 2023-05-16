@@ -25,9 +25,8 @@ public class getTimeForWeatherApi {
 
         month = changeMonthFormat(month);
 
-        log.info("getTimeForWeatherApi/getTodayDate/{}",year.concat(month).concat(day));
-        String date = day.concat(year.concat(month));
-
+        String date  = year.concat(month).concat(day);
+        log.info("getTimeForWeatherApi/getTodayDate/{}",date);
 
         return date;
     }
@@ -35,7 +34,7 @@ public class getTimeForWeatherApi {
     public static String getParSearchDate(){
         String tempDate = getTimeForWeatherApi.getTodayDate();
 
-        String searchDate = tempDate.substring(0,4) + "-" + tempDate.substring(5,7) + "-" + tempDate.substring(7,9);
+        String searchDate = tempDate.substring(0,4) + "-" + tempDate.substring(4,6) + "-" + tempDate.substring(6,8);
         return searchDate;
     }
 
