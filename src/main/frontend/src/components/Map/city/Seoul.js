@@ -78,7 +78,7 @@ const Seoul = () => {
                         </feMerge>
                     </filter>
                 </defs>
-                <g>
+                <g className="Map">
                     {data.map((gu) => (
                         <path
                             key={gu.guCode}

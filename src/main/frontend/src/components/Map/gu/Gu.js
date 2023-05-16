@@ -1,12 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { useParams } from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 import Seoul from "../city/Seoul";
 import "../styles/Gu.css";
+import Button from '@mui/material/Button';
 
 const API_URL = 'http://localhost:8080/map/spotlist';
 //현재는 서울만 들어있음 -> test용 -> parameter를 city_code,gu_code로 변경예정
 
 const Gu = () => {
+
+    let navigate = useNavigate();
 
     const { city_code, gu_code } = useParams();
     const [data, setData] = useState([]);
@@ -17,7 +20,7 @@ const Gu = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`${API_URL}?guCode=${gu_code}`);//url에 city_code, gu_code를 넘기는 것으로 변경예정
+                const response = await fetch(`${API_URL}?guCode=${gu_code}`);
                 const json = await response.json();
                 setData(json.data);
                 console.log('Fetched data:', json.data);
@@ -28,12 +31,20 @@ const Gu = () => {
         fetchData();
     }, []);
 
+    const HandleButtonClick = () => {
+        console.log("이전 gumap으로 이동");
+        navigate(`/city/${city_code}`);
+    }
+
     return (
         <div className="Gu">
             <div className="City">
                 {city_code === "CD11" && <Seoul />}
             </div>
             <div className="Spot">
+                <div>
+                    <Button className="BackButton" onClick={()=>{HandleButtonClick()}}> back </Button>
+                </div>
                 {data.map((item, index) => (
                     <div key={index}>
                         <p>Spot Name: {item.spotName}</p>
