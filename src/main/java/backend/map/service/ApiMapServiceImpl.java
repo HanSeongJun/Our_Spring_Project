@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 
 @Service
@@ -31,6 +28,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ApiMapServiceImpl implements ApiMapService {
 
+    private final CityRepository cityRepository;
     private final ApiDataRepository apiDataRepository;
     private final ParticulateMatter particulateMatter;
     private final Weather weather;
@@ -74,13 +72,39 @@ public class ApiMapServiceImpl implements ApiMapService {
 //    @Scheduled(cron = "10 * * * * *" ) //10초 반복 -> test용으로 사용한다.
     public void updateApiDataWeather() throws IOException, ParseException {
 
-        HashMap<String, String> weatherState = weather.extractWeatherState("60", "120");
+        String informSky = "";
+        String informPty = "";
+
+        List<City> cityList = cityRepository.findAll();
+        HashMap<String, String> weatherDataForAllCity = getWeatherDataForAllCity(informSky, informPty, cityList);
 
         List<ApiData> apiData = apiDataRepository.findAll();
         ApiData updateApiData = apiData.get(0);
 
-        WeatherInfoDto weatherInfoDto = new WeatherInfoDto(weatherState.get("informSky"),weatherState.get("informPty"));
+        WeatherInfoDto weatherInfoDto = new WeatherInfoDto(weatherDataForAllCity.get("informSky"),weatherDataForAllCity.get("informPty"));
         updateApiData.updateWeather(weatherInfoDto);
+
+    }
+
+    private HashMap<String, String> getWeatherDataForAllCity(String informSky, String informPty, List<City> cityList) throws IOException, ParseException {
+        for(int i = 0; i< cityList.size(); i++){
+            City city = cityList.get(i);
+            String xCode = city.getXCode();
+            String yCode = city.getXCode();
+            String cityName = city.getCityName();
+            HashMap<String, String> weatherState = weather.extractWeatherState(xCode, yCode);
+
+            String informSkyTemp  = cityName + " : " + weatherState.get("informSky") + " ";
+            String informPtyTemp =  cityName + " : "  + weatherState.get("informPty") + " ";
+            informSky = informSky.concat(informSkyTemp);
+            informPty = informPty.concat(informPtyTemp);
+        }
+
+        HashMap<String, String> weatherDataForAllCity = new HashMap<>();
+        weatherDataForAllCity.put("informSky", informSky);
+        weatherDataForAllCity.put("informPty", informPty);
+
+        return weatherDataForAllCity;
 
     }
 }

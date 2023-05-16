@@ -12,6 +12,6 @@ import java.util.List;
 public interface ApiMapService {
 
     void updateApiDataParti() throws IOException, ParseException;
-
+    void updateApiDataWeather() throws IOException, ParseException;
 
 }

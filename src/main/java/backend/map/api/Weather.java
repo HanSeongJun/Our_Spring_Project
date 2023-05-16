@@ -106,7 +106,7 @@ public class Weather {
 
     public void extractWeather(String xCode, String yCode) throws IOException, ParseException {
 
-        String buildUrl = buildUrl(serviceKey, endPoint, "60", "120");
+        String buildUrl = buildUrl(serviceKey, endPoint, xCode, yCode);
         StringBuilder response = getResponse(buildUrl);
 
         log.info("Weather/extractWeatherCityGrade/response = {}" + response.toString());
