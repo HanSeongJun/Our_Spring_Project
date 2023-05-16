@@ -106,13 +106,6 @@ export default function FindId() {
         }
 
         try {
-            // await fetch('/user/FindUserId', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify(formData),
-            // });
             sessionStorage.setItem('verifiedEmail', formData.email);
             window.location.href = '/user/FindUserId';
         } catch (error) {
