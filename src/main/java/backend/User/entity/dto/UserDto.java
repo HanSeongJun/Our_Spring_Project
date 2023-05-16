@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@AllArgsConstructor
 public class UserDto {
 
     private Long id;
@@ -17,6 +17,10 @@ public class UserDto {
     private String password;
     private String nickname;
     private String email;
+
+    public UserDto(String password) {
+        this.password = password;
+    }
 
     public static UserDto toDto(User user) {
         return UserDto.builder()

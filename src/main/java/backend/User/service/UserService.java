@@ -39,6 +39,7 @@ public class UserService {
                 .map(user -> {
                     user.setUsername(userDto.getUsername());
                     user.setNickname(userDto.getNickname());
+                    user.setPassword(userDto.getPassword());
                     user.setEmail(userDto.getEmail());
                     userRepository.save(user);
                     return user.getId();
@@ -87,5 +88,9 @@ public class UserService {
         } else {
             return null;
         }
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

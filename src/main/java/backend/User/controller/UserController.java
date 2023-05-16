@@ -1,5 +1,6 @@
 package backend.User.controller;
 
+import backend.User.entity.User;
 import backend.User.entity.dto.UserDto;
 import backend.User.service.UserService;
 import backend.User.service.email.EmailService;
@@ -169,5 +170,27 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestBody String newPassword) {
+        UserDto userDto = UserDto.toDto(userService.findByEmail(email));
+
+        if (userDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        UserDto newUserDto = UserDto.builder()
+                .username(userDto.getUsername())
+                .password(newPassword)
+                .nickname(userDto.getNickname())
+                .email(userDto.getEmail())
+                .id(userDto.getId())
+                .build();
+
+        newUserDto.setPassword(newPassword);
+        userService.update(newUserDto); // 비밀번호 업데이트
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
