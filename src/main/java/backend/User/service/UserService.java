@@ -39,6 +39,7 @@ public class UserService {
                 .map(user -> {
                     user.setUsername(userDto.getUsername());
                     user.setNickname(userDto.getNickname());
+                    user.setPassword(userDto.getPassword());
                     user.setEmail(userDto.getEmail());
                     userRepository.save(user);
                     return user.getId();
@@ -77,5 +78,19 @@ public class UserService {
                 .where(emailPredicate)
                 .fetchCount();
         return count > 0;
+    }
+
+    // 이메일 기반으로 아이디 찾기
+    public String findUserIdByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            return user.getUsername();
+        } else {
+            return null;
+        }
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 }

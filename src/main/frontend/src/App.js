@@ -13,6 +13,10 @@ import ListBoard from "./components/Board/ListBoard";
 import UploadBoard from "./components/Board/UploadBoard";
 import DetailBoard from "./components/Board/DetailBoard";
 import Navbar from "./components/Navbar";
+import FindId from "./components/User/FindId";
+import FindUserId from "./components/User/FindUserId";
+import FindPassword from "./components/User/FindPassword";
+import NewUserPassword from "./components/User/NewUserPassword";
 
 function App() {
     return(
@@ -28,6 +32,10 @@ function App() {
                     <Route path="/user/editUserComplete" element={<EditUserComplete />} />
                     <Route path="/user/myPage" element={<MyPage />} />
                     <Route path="/user/signUpComplete" element={<SignUpComplete />} />
+                    <Route path="/user/FindId" element={<FindId />} />
+                    <Route path="/user/FindUserId" element={<FindUserId />} />
+                    <Route path="/user/FindPassword" element={<FindPassword />} />
+                    <Route path="/user/NewUserPassword" element={<NewUserPassword />} />
 
                     // Map
                     <Route path='/home' element = {<Home />} />
@@ -38,7 +46,6 @@ function App() {
                     <Route path = '/city/:city_code/:gu_code/spot' element = {<ListBoard/>}/>
                     <Route path = '/city/:city_code/:gu_code/spot/:image_id' element = {<DetailBoard/>}/>
                     <Route path = '/city/:city_code/:gu_code/spot/upload' element = {<UploadBoard/>}/>
-
 
                 </Routes>
             </div>

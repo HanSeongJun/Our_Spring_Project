@@ -174,11 +174,6 @@ const SignUp = () => {
             return;
         }
 
-        if (formData.emailConfirm !== emailConfirm) {
-            alert('이메일 인증이 완료되지 않았습니다.');
-            return;
-        }
-
         if (formData.password !== formData.confirmPassword) {
             alert('비밀번호가 일치하지 않습니다.');
             return;

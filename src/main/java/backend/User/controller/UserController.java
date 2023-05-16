@@ -1,11 +1,13 @@
 package backend.User.controller;
 
+import backend.User.entity.User;
 import backend.User.entity.dto.UserDto;
 import backend.User.service.UserService;
 import backend.User.service.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,6 +99,7 @@ public class UserController {
         }
     }
 
+    // == 이메일 인증 ==
     @PostMapping("/emailConfirm")
     public ResponseEntity<String> emailConfirm(@RequestParam String email) throws Exception {
         if (!EmailValidator.getInstance().isValid(email)) {
@@ -107,6 +110,22 @@ public class UserController {
             return ResponseEntity.badRequest().body("{\"message\": \"Email already exists\"}");
         }
 
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
+    }
+
+    // 아이디 찾기 이메일 인증
+    @PostMapping("/findIdEmailConfirm")
+    public ResponseEntity<String> findIdEmailConfirm(@RequestParam String email) throws Exception {
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
+    }
+
+    // 비밀번호 찾기 이메일 인증
+    @PostMapping("/findPasswordEmailConfirm")
+    public ResponseEntity<String> findPasswordEmailConfirm(@RequestParam String email) throws Exception {
         String confirm = emailService.sendSimpleMessage(email);
 
         return ResponseEntity.ok("{\"confirm\": \"" + confirm + "\"}");
@@ -140,5 +159,38 @@ public class UserController {
         result.put("exists", exists);
 
         return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/findUserId")
+    public ResponseEntity<String> findUserIdByEmail(@RequestParam String email) {
+        String userId = userService.findUserIdByEmail(email);
+
+        if (userId != null) {
+            return ResponseEntity.ok(userId);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestParam String email, @RequestBody String newPassword) {
+        UserDto userDto = UserDto.toDto(userService.findByEmail(email));
+
+        if (userDto == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        UserDto newUserDto = UserDto.builder()
+                .username(userDto.getUsername())
+                .password(newPassword)
+                .nickname(userDto.getNickname())
+                .email(userDto.getEmail())
+                .id(userDto.getId())
+                .build();
+
+        newUserDto.setPassword(newPassword);
+        userService.update(newUserDto); // 비밀번호 업데이트
+
+        return ResponseEntity.ok("Password updated successfully");
     }
 }
