@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams, Routes, Route, Link } from 'react-router-dom';
 import Seoul from './Seoul';
-import Busan from "./Busan";
 
 const City = () => {
 
@@ -13,7 +12,6 @@ const City = () => {
     return (
         <div>
             {code === "CD11" && <Seoul />}
-            {code === "CD26" && <Busan />}
         </div>
     );
 }

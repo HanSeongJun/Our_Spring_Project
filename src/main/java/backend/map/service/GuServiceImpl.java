@@ -1,15 +1,18 @@
 package backend.map.service;
 
+import backend.map.entity.City;
 import backend.map.entity.dto.GuMapInfoDto;
 import backend.map.entity.dto.SpotInfoDto;
 import backend.map.entity.Gu;
 import backend.map.entity.Spot;
+import backend.map.repository.CityRepository;
 import backend.map.repository.GuRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,15 +24,18 @@ import java.util.Optional;
 public class GuServiceImpl implements GuService{
 
     private final GuRepository guRepository;
+    private final CityRepository cityRepository;
 
     @Override
-    public List<GuMapInfoDto> getGuMap() {
+    public List<GuMapInfoDto> getGuMap(String cityCode) {
 
-        List<Gu> guList = guRepository.findAll();
+        Optional<City> city = cityRepository.findByCityCode(cityCode);
+        List<Gu> guList = guRepository.findGuByCity(city.get());
         List<GuMapInfoDto> guMapInfoDtoList = new ArrayList<>();
         for(int i=0; i<guList.size(); i++){
-            Gu gu = guList.get(1);
-            GuMapInfoDto guMapInfoDto = new GuMapInfoDto(gu.getGuCode(), gu.getGuName());
+            Gu gu = guList.get(i);
+
+            GuMapInfoDto guMapInfoDto = new GuMapInfoDto(gu.getGuCode(), gu.getGuName(), gu.getVector(), gu.getCity().getGrade());
             guMapInfoDtoList.add(guMapInfoDto);
         }
         log.info("CityServiceImpl/getCityMap/guMapInfoDtoList = {}", guMapInfoDtoList);

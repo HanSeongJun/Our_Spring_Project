@@ -20,8 +20,8 @@ public class GuController {
     private final GuServiceImpl guService;
 
     @GetMapping("/gumap")
-    public HashMap<String, List>  guMap(){
-        List<GuMapInfoDto> guMap = guService.getGuMap();
+    public HashMap<String, List>  guMap(@RequestParam String cityCode){
+        List<GuMapInfoDto> guMap = guService.getGuMap(cityCode);
         HashMap<String, List> guMapResult = new HashMap<>();
         guMapResult.put("data",guMap);
 

@@ -21,6 +21,10 @@ public class Gu {
     @JoinColumn(name="city_id")
     private City city;
 
+    //vector값 저장
+    @Column(columnDefinition = "varchar(5000)")
+    private String vector;
+
     //spot연관관계 매핑필요 -> gu가 1개일때 spot 여러개
     @OneToMany(mappedBy = "gu")
     private List<Spot> spotlist = new ArrayList<>();
