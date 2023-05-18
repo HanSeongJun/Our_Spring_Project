@@ -50,11 +50,11 @@ const Map = () => {
                 if (data[i]["grade"] === 1) {
                     return '#B3E5FC'; // Change to the desired color for the highest grade
                 } else if (data[i]["grade"] === 2) {
-                    return '#81D4FA'; // Change to the desired color for intermediate grades
+                    return '#BAE19AFF'; // Change to the desired color for intermediate grades
                 } else if (data[i]["grade"] === 3) {
-                    return '#4FC3F7'; // Change to the desired color for the lowest grade
+                    return '#D0A684FF'; // Change to the desired color for the lowest grade
                 }else{
-                    return '#FFFFFFFF';
+                    return '#EFB9B9FF';
                 }
             }
         }
