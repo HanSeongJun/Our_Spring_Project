@@ -17,8 +17,21 @@ export default function Navbar() {
     }, [location]);
 
     const handleLogout = () => {
-        sessionStorage.removeItem('loginUser');
-        setIsLoggedIn(false);
+        fetch('/user/logOut', {
+            method: 'POST',
+            credentials: 'include'
+        })
+            .then(response => {
+                if (response.ok) {
+                    sessionStorage.removeItem('loginUser');
+                    setIsLoggedIn(false);
+                } else {
+                    console.error(response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     return (

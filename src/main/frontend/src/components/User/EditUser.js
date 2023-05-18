@@ -19,6 +19,68 @@ export default function EditUser() {
         UserData();
     }, []);
 
+    // 아이디
+    const [username, setUsername] = useState('');
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(true);
+    const [usernameError, setUsernameError] = useState('');
+
+    // 아이디 입력 필드의 값이 변경될 때마다 실행됨
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
+
+    // useEffect를 사용하여 아이디 입력 값이 변경될 때마다 중복 여부를 요청함
+    useEffect(() => {
+        // 입력 값이 빈 문자열일 경우 중복 체크를 하지 않음
+        if (username === '') {
+            setIsUsernameAvailable(true);
+            setUsernameError('');
+            return;
+        }
+
+        // 중복 체크 요청
+        fetch(`/user/checkUserName?username=${username}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setIsUsernameAvailable(!data.exists);
+                setUsernameError(data.exists ? '이미 존재하는 아이디입니다.' : '');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, [username]);
+
+    // 닉네임
+    const [nickname, setNickname] = useState('');
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(true);
+    const [nicknameError, setNicknameError] = useState('');
+
+    // 아이디 입력 필드의 값이 변경될 때마다 실행됨
+    const handleNicknameChange = (event) => {
+        setNickname(event.target.value);
+    };
+
+    // useEffect를 사용하여 아이디 입력 값이 변경될 때마다 중복 여부를 요청함
+    useEffect(() => {
+        // 입력 값이 빈 문자열일 경우 중복 체크를 하지 않음
+        if (nickname === '') {
+            setIsNicknameAvailable(true);
+            setNicknameError('');
+            return;
+        }
+
+        // 중복 체크 요청
+        fetch(`/user/checkNickName?nickname=${nickname}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setIsNicknameAvailable(!data.exists);
+                setNicknameError(data.exists ? '이미 존재하는 아이디입니다.' : '');
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }, [nickname]);
+
     const handleSubmit = async (event) => {
         event.preventDefault();
 
@@ -60,16 +122,39 @@ export default function EditUser() {
             <div className="containerWrapper">
                 <Container>
                     <Box className="form">
-                        {user ? <TextField id="username" label="아이디" className="input" defaultValue={user.username} /> : null}
-                        {user ? <TextField id="password" label="비밀번호" type="password" className="input" defaultValue={user.password} /> : null}
-                        <TextField id="confirmPassword" label="비밀번호 확인" type="password" className="input"/>
-                        {user ? <TextField id="nickname" label="닉네임" className="input" defaultValue={user.nickname} /> : null}
-                        {user ? <TextField label="이메일" className="input" disabled defaultValue={user.email} /> : null}
+                        {user ? <TextField
+                            id="username"
+                            label="아이디"
+                            type="text"
+                            defaultValue={user.username}
+                            className="input"
+                            error={!!usernameError}
+                            helperText={usernameError}
+                            color={isUsernameAvailable ? 'primary' : 'error'}
+                            onChange={handleUsernameChange}
+                            required
+                        /> : null}
+                        {user ? <TextField id="password" label="비밀번호" type="password" defaultValue={user.password} className="input" required/> : null}
+                        <TextField id="confirmPassword" label="비밀번호 확인" type="password" className="input"
+                                   required/>
+                        {user ? <TextField
+                            id="nickname"
+                            label="닉네임"
+                            type="text" defaultValue={user.nickname}
+                            className="input"
+                            error={!!nicknameError}
+                            helperText={nicknameError}
+                            color={isNicknameAvailable ? 'primary' : 'error'}
+                            onChange={handleNicknameChange}
+                            required/> : null}
+                        {user ? <TextField label="이메일" type="text" defaultValue={user.email} className="input" disabled/> : null}
                         <Button variant="contained" size="large" className="button" onClick={handleSubmit}>
                             변경하기
                         </Button>
-                        <Link to="/user/myPage" className="link">
-                            취소
+                        <Link to="/user/myPage" className="button">
+                            <Button variant="contained" size="large" className="button">
+                                취소
+                            </Button>
                         </Link>
                     </Box>
                 </Container>
