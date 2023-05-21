@@ -15,9 +15,10 @@
 
 | 사용 기술| 종류 |
 | --- | --- |
-| 프레임워크 | Spring, React |
-| 데이터베이스 | MySQL |
-| 버전 관리 | Git |
+| 언어 | <img src="https://img.shields.io/badge/java-007396?style=for-the-badge&logo=java&logoColor=white"> |
+| 프레임워크 | <img src="https://img.shields.io/badge/spring-6DB33F?style=for-the-badge&logo=spring&logoColor=white">  <img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">  |
+| 데이터베이스 | <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">  |
+| 버전 관리 | <img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white"> |
 | 개발 환경 | IntelliJ |
 | Build Tool | Gradle |
 
