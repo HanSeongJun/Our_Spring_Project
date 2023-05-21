@@ -41,13 +41,13 @@ const Seoul = () => {
     const getColorByGrade = (id)  =>{
 
         for(let i=0; i<data.length; i++){
-            if(data[i]["guCode"] === id){
+            if(data[i]["guCode"] === id) {
                 if (data[i]["grade"] === 1) {
                     return '#B3E5FC'; // Change to the desired color for the highest grade
                 } else if (data[i]["grade"] === 2) {
                     return '#BAE19AFF'; // Change to the desired color for intermediate grades
                 } else if (data[i]["grade"] === 3) {
-                    return '#D0A684FF'; // Change to the desired color for the lowest grade
+                    return '#f6945f'; // Change to the desired color for the lowest grade
                 }else{
                     return '#EFB9B9FF';
                 }

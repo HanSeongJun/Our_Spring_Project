@@ -18,17 +18,20 @@
   color: #B3E5FC;
 }
 .Grade2{
-  color: #81D4FA;
+  color: #BAE19AFF;
 }
 .Grade3{
-  color: #4FC3F7;
+  color: #f6945f;
+}
+.Grade4{
+  color: #EFB9B9FF;
 }
 .Weather{
   margin: 5% 5%;
   width: 30%;
   backgroundColor: #ffffff;
-  border: 3px solid #CDC0C0FF;
-  border-radius: 10px 10px;
+  /*border: 3px solid #CDC0C0FF;*/
+  /*border-radius: 10px 10px;*/
   boxShadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }
@@ -37,8 +40,8 @@
   margin: 5% 5%;
   width: 30%;
   backgroundColor: #ffffff;
-  border: 3px solid #CDC0C0FF;
-  border-radius: 10px 10px;
+  /*border: 3px solid #CDC0C0FF;*/
+  /*border-radius: 10px 10px;*/
   boxShadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: inline-block;
 }

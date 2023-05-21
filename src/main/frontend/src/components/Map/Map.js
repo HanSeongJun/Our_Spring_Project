@@ -3,6 +3,7 @@ import "./styles/Home.css";
 import { useNavigate } from 'react-router-dom';
 import "./styles/Map.css";
 import {Rating} from "@mui/material";
+import RecipeReviewCard from "./weather/WeatherCard";
 
 const API_URL = 'http://localhost:8080/map/citymap';
 
@@ -52,7 +53,7 @@ const Map = () => {
                 } else if (data[i]["grade"] === 2) {
                     return '#BAE19AFF'; // Change to the desired color for intermediate grades
                 } else if (data[i]["grade"] === 3) {
-                    return '#D0A684FF'; // Change to the desired color for the lowest grade
+                    return '#f6945f'; // Change to the desired color for the lowest grade
                 }else{
                     return '#EFB9B9FF';
                 }
@@ -63,28 +64,25 @@ const Map = () => {
     return(
         <div className="Map">
 
-            <div className="Weather">
-                <p>오늘의 하늘상태와 강수형태는?</p>
-                <p>{apidata.informSky}</p>
-                <p>{apidata.informPty}</p>
+            <div className="MapDiv1">
+                <div className="Weather">
+                    <RecipeReviewCard title={"오늘의 날씨는?"} subtitle={"등급별 분류"} img={"img/card/weather.png"} parameter1={apidata.informSky} parameter2 ={apidata.informPty}></RecipeReviewCard>
+                </div>
+                <div className="ParticulateMater">
+                    <RecipeReviewCard title={"오늘의 미세먼지는?"} subtitle={"등급별 분류"} img={"img/card/parti.png"} parameter1={apidata.informCause} parameter2 ={apidata.informOverall}></RecipeReviewCard>
+                </div>
+                <br />
 
-            </div>
-
-            <div className="ParticulateMater">
-                <p>오늘의 미세먼지🍀 상태는? </p>
-                <p>{apidata.informCause}</p>
-                <p>{apidata.informOverall}</p>
-
-            </div>
-            <br />
-
-            <div className="Grade3_1">
                 <div>
-                    <p className="Grade1">1등급(매우좋음)</p>
-                    <p className="Grade2">2등급(보통)</p>
-                    <p className="Grade3">3등급(나쁨)</p>
+                    <div>
+                        <p className="Grade1">1등급(매우좋음)</p>
+                        <p className="Grade2">2등급(좋음)</p>
+                        <p className="Grade3">3등급(보통)</p>
+                        <p className="Grade4">4등급(나쁨)</p>
+                    </div>
                 </div>
             </div>
+
             <div className="Grade3_2">
             <svg className="Svg"  xmlns="http://www.w3.org/2000/svg">
                 <defs>
