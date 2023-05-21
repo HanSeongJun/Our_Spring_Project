@@ -41,6 +41,7 @@ const Gu = () => {
             <div className="City">
                 {city_code === "CD11" && <Seoul />}
             </div>
+            <span className="Span"></span>
             <div className="Spot">
                 <div>
                     <Button className="BackButton" onClick={()=>{HandleButtonClick()}}> back </Button>

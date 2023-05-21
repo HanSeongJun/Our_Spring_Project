@@ -17,6 +17,7 @@ import FindId from "./components/User/FindId";
 import FindUserId from "./components/User/FindUserId";
 import FindPassword from "./components/User/FindPassword";
 import NewUserPassword from "./components/User/NewUserPassword";
+import RecipeReviewCard from "./components/Map/weather/WeatherCard";
 
 function App() {
     return(
@@ -41,6 +42,7 @@ function App() {
                     <Route path='/home' element = {<Home />} />
                     <Route path="/city/:code" element = {<City />} />
                     <Route path="/city/:city_code/:gu_code" element = {<Gu />} />
+                    {/*<Route path="/test" element={<RecipeReviewCard/>}/>*/}
 
                     // Board
                     <Route path = '/city/:city_code/:gu_code/spot' element = {<ListBoard/>}/>

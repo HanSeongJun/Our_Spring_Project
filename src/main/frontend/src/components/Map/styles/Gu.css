@@ -1,7 +1,13 @@
 .Spot{
     padding: 10px;
-    flex: 2;
-    margin: auto;
+    flex: 3;
+    border: 4px solid lightskyblue;
+    border-radius: 40px;
+    margin: 5%;
+}
+.Span{
+    flex:2;
+    max-width: 10%;
 }
 .City{
     text-align: center;
