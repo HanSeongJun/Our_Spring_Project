@@ -23,6 +23,11 @@
 
 ### **1.4 프로젝트 세팅**
 
+**Start Project** 
+```javascript
+npm install
+```
+
 **`api.yml`**
 
 ```java
